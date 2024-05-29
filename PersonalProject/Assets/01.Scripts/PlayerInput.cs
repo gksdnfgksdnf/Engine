@@ -9,11 +9,13 @@ public class PlayerInput : MonoBehaviour
 {
 
     public event Action<Vector3> OnMove;
+    public event Action<Vector3> OnObstacleMove;
 
     private Vector3 moveDirection = Vector3.zero; // 이동 방향을 저장하는 변수
 
-    private bool _isMove = false;
+    private bool _isCanMove = false;
 
+    private bool _isCanMoveObstacle = false;
     void Update()
     {
         Movement();
@@ -26,17 +28,18 @@ public class PlayerInput : MonoBehaviour
         int v = Input.GetKeyDown(KeyCode.W) ? 1 : Input.GetKeyDown(KeyCode.S) ? -1 : 0;
 
 
-        // 입력이 감지된 경우 이동 방향 설정
-        if ((h != 0 || v != 0) && _isMove)
+        if ((h != 0 || v != 0) && _isCanMove)
         {
             moveDirection = new Vector3(h, 0, v);
             OnMove?.Invoke(moveDirection);
-            _isMove = false;
+            OnObstacleMove?.Invoke(moveDirection);
+
+            _isCanMove = false;
         }
 
         if (h == 0 && v == 0)
         {
-            _isMove = true;
+            _isCanMove = true;
         }
     }
 }

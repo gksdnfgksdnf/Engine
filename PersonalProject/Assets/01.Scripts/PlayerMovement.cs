@@ -22,10 +22,10 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Start()
     {
-        _playerInput.OnMove += Movement;
+        _playerInput.OnMove += SetDirection;
     }
 
-    private void Movement(Vector3 movement)
+    private void SetDirection(Vector3 movement)
     {
         if (!_isMove)
         {
@@ -37,12 +37,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void ApplyRotation(Vector3 movement)
     {
-        float rotationSpeed = 17f;
         _targetRotation = Quaternion.LookRotation(movement);
-        transform.rotation = Quaternion.Lerp(
-                            transform.rotation,
-                            _targetRotation,
-                            Time.fixedDeltaTime * rotationSpeed);
+        transform.rotation = _targetRotation;
     }
 
     private void FixedUpdate()
@@ -63,8 +59,4 @@ public class PlayerMovement : MonoBehaviour
             ApplyRotation(_movement);
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        print(other.gameObject.name);
-    }
 }
