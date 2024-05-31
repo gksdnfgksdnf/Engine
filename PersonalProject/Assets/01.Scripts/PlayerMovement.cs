@@ -4,10 +4,10 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody _rb;
-    private PlayerInput _playerInput;
+    public PlayerInput _playerInput;
 
     [SerializeField] private float _speed = 5f;
-    private Vector3 _movementDirection;
+    public Vector3 _movementDirection = Vector3.zero;
     private Vector3 _targetPosition;
 
     private bool _isMoving = false;
