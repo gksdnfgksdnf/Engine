@@ -1,62 +1,58 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    private Rigidbody _rb;
     private PlayerInput _playerInput;
 
-    [SerializeField] float _speed = 5f;
+    [SerializeField] private float _speed = 5f;
+    private Vector3 _movementDirection;
+    private Vector3 _targetPosition;
 
-    private bool _isMove = false;
-
-    private Vector3 targetPosition;
-    private Vector3 _movement;
-    private Quaternion _targetRotation;
+    private bool _isMoving = false;
 
     private void Awake()
     {
+        _rb = GetComponent<Rigidbody>();
         _playerInput = GetComponent<PlayerInput>();
-    }
-    private void Start()
-    {
-        _playerInput.OnMove += SetDirection;
+        _playerInput.OnMove += StartMovement;
     }
 
-    private void SetDirection(Vector3 movement)
+    private void StartMovement(Vector3 direction)
     {
-        if (!_isMove)
-        {
-            _movement = movement;
-            targetPosition = transform.position + movement;
-            _isMove = true;
-        }
-    }
+        if (_isMoving) return;
 
-    private void ApplyRotation(Vector3 movement)
-    {
-        _targetRotation = Quaternion.LookRotation(movement);
-        transform.rotation = _targetRotation;
+        _movementDirection = direction;
+        _targetPosition = _rb.position + _movementDirection;
+        _isMoving = true;
     }
 
     private void FixedUpdate()
     {
-        Movement();
-    }
-
-    private void Movement()
-    {
-        if (_isMove)
+        if (_isMoving)
         {
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, _speed * Time.fixedDeltaTime);
-
-            if (transform.position == targetPosition)
-                _isMove = false;
+            Move();
         }
-        if (_movement != Vector3.zero)
-            ApplyRotation(_movement);
+
+        ApplyRotation();
     }
 
+    private void Move()
+    {
+        Vector3 newPosition = Vector3.MoveTowards(_rb.position, _targetPosition, _speed * Time.fixedDeltaTime);
+        _rb.MovePosition(newPosition);
+
+        if (Vector3.Distance(_rb.position, _targetPosition) <= 0.01f)
+        {
+            _rb.position = _targetPosition; // 정확한 위치
+            _isMoving = false;
+        }
+    }
+
+    private void ApplyRotation()
+    {
+        if (_movementDirection.normalized != Vector3.zero)
+            transform.rotation = Quaternion.LookRotation(_movementDirection.normalized);
+    }
 }

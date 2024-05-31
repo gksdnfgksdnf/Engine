@@ -17,9 +17,9 @@ public class Obstacle : MonoBehaviour
         _player.OnObstacleMove += ObstacleMove;
     }
 
-    private void ObstacleMove(Vector3 direction)
+    private void ObstacleMove(Vector3 targetPos)
     {
-        _targetPosition = transform.position + direction;
+        _targetPosition = transform.position + targetPos;
         _isMoving = true;
 
     }
@@ -45,7 +45,6 @@ public class Obstacle : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
             _isCanMove = true;
     }
-
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
