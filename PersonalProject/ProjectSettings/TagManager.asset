@@ -3,7 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Babo
+  - Flag
+  - Rock
+  - You
+  - Is
+  - Push
   layers:
   - Default
   - TransparentFX
@@ -12,10 +18,10 @@ TagManager:
   - Water
   - UI
   - Obstacle
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - You
+  - Push
+  - Is
   - 
   - 
   - 

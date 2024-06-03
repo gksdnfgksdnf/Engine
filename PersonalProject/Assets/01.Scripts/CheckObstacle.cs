@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CheckObstacle : MonoBehaviour
@@ -8,7 +6,12 @@ public class CheckObstacle : MonoBehaviour
     PlayerInput _playerInput;
     [SerializeField] float _range = 2f;
     [SerializeField] private LayerMask _whatisObstacle;
-    [SerializeField] private bool _isMove;
+    private bool _isMove;
+
+    private Vector3 lastInput;
+    private Vector3 moveInput;
+
+    private Obstacle _currentContactObj;
 
     private void Awake()
     {
@@ -24,23 +27,43 @@ public class CheckObstacle : MonoBehaviour
 
     public void DrawRay()
     {
+
         bool isHit = Physics.Raycast(transform.position, _player._movementDirection, out RaycastHit hit, _range, _whatisObstacle);
 
         if (isHit)
         {
-            if (_isMove)
-                if (hit.collider.TryGetComponent<Obstacle>(out Obstacle obstacle))
+            if (hit.collider.TryGetComponent<Obstacle>(out Obstacle obstacle))
+            {
+                _currentContactObj = obstacle;
+                obstacle._isContactPlayer = true;
+                obstacle._isContactObj = true;
+                lastInput = moveInput;
+
+                if (_isMove)
                 {
-                    obstacle.SetDirection(_player._movementDirection);
-                    _isMove = false; // 키 입력 처리 후 _isMove를 false로 설정
+                    if (lastInput == moveInput)
+                        if (obstacle._isContactPlayer)
+                        {
+                            obstacle.SetDirection(_player._movementDirection);
+                            _isMove = false; // 키 입력 처리 후 _isMove를 false로 설정
+                        }
                 }
+            }
+
+
         }
         else
+        {
             _isMove = false;
+            if (_currentContactObj != null)
+                _currentContactObj._isContactPlayer = false;
+
+        }
     }
 
-    private void OnMove()
+    private void OnMove(Vector3 input)
     {
+        moveInput = input;
         _isMove = true;
     }
 

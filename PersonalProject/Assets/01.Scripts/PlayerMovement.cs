@@ -31,15 +31,14 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         if (_isMoving)
-        {
             Move();
-        }
 
         ApplyRotation();
     }
 
     private void Move()
     {
+
         Vector3 newPosition = Vector3.MoveTowards(_rb.position, _targetPosition, _speed * Time.fixedDeltaTime);
         _rb.MovePosition(newPosition);
 
