@@ -10,10 +10,10 @@ public class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
     {
         get
         {
-            if(_instance == null)
+            if (_instance == null)
             {
                 _instance = FindObjectOfType<T>();
-                if(_instance = null)
+                if (_instance = null)
                 {
                     var singletonObject = new GameObject();
                     _instance = singletonObject.AddComponent<T>();
@@ -21,6 +21,19 @@ public class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
                 }
             }
             return _instance;
+        }
+    }
+
+    protected virtual void Awake()
+    {
+        if (_instance == null)
+        {
+            _instance = this as T;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
         }
     }
 }

@@ -2,69 +2,96 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public GridManager2 gridManager;
-    private int playerX = 1;
-    private int playerY = 1;
-    private int playerZ = 1;
+    private Rigidbody _rb;
+    private Vector3 _dir;
+    private Vector3 _targetPos;
+    [SerializeField] private Object _targetObject;
+    private bool _isMoving = false;
+    [SerializeField] private float _playerSpeed = 5f;
 
-    void Start()
+    public Vector3 Direction => _dir;
+
+    private void Awake()
     {
-        gridManager.PlaceObjectInGrid(this.gameObject, playerX, playerY, playerZ);
+        _rb = GetComponent<Rigidbody>();
+    }
+
+    private void Start()
+    {
+        GridManager.Instance.SetPlayer(new Vector3Int((int)_rb.position.x, (int)_rb.position.y, (int)_rb.position.z));
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.W)) MovePlayer(0, 0, 1);
-        if (Input.GetKeyDown(KeyCode.S)) MovePlayer(0, 0, -1);
-        if (Input.GetKeyDown(KeyCode.A)) MovePlayer(-1, 0, 0);
-        if (Input.GetKeyDown(KeyCode.D)) MovePlayer(1, 0, 0);
+        MoveInput();
+        MovePlayer();
+        ApplyRotation();
     }
 
-    void MovePlayer(int deltaX, int deltaY, int deltaZ)
+    private void MoveInput()
     {
-        int newX = playerX + deltaX;
-        int newY = playerY + deltaY;
-        int newZ = playerZ + deltaZ;
+        if (Input.GetKeyDown(KeyCode.W)) SetDirection(Vector3.forward);
+        else if (Input.GetKeyDown(KeyCode.S)) SetDirection(Vector3.back);
+        else if (Input.GetKeyDown(KeyCode.A)) SetDirection(Vector3.left);
+        else if (Input.GetKeyDown(KeyCode.D)) SetDirection(Vector3.right);
+    }
 
-        if (CanMoveTo(newX, newY, newZ))
+    private void MovePlayer()
+    {
+        if (!_isMoving) return;
+
+        Vector3 newPosition = Vector3.MoveTowards(_rb.position, _targetPos, _playerSpeed * Time.fixedDeltaTime);
+        _rb.MovePosition(newPosition);
+
+        if (Vector3.Distance(_rb.position, _targetPos) <= 0.01f)
         {
-            GameObject objAtNewPos = gridManager.GetObjectAtGridPosition(newX, newY, newZ);
-            if (objAtNewPos != null)
-            {
-                PushObject(objAtNewPos, deltaX, deltaY, deltaZ);
-            }
-
-            gridManager.MoveObjectInGrid(gameObject, newX, newY, newZ);
-            playerX = newX;
-            playerY = newY;
-            playerZ = newZ;
-            transform.position = gridManager.GetWorldPosition(playerX, playerY, playerZ);
+            _rb.position = _targetPos; // 정확한 위치
+            GridManager.Instance.SetPlayer(new Vector3Int((int)_rb.position.x, (int)_rb.position.y, (int)_rb.position.z));
+            _isMoving = false;
         }
     }
 
-    void PushObject(GameObject obj, int deltaX, int deltaY, int deltaZ)
+    private void SetDirection(Vector3 dir)
     {
-        int objX = playerX + deltaX;
-        int objY = playerY + deltaY;
-        int objZ = playerZ + deltaZ;
-
-        int newObjX = objX + deltaX;
-        int newObjY = objY + deltaY;
-        int newObjZ = objZ + deltaZ;
-
-        if (CanMoveTo(newObjX, newObjY, newObjZ))
+        if (CanMoveTo(dir))
         {
-            GameObject nextObj = gridManager.GetObjectAtGridPosition(newObjX, newObjY, newObjZ);
-            if (nextObj != null)
+            if (_isMoving) return;
+
+            _dir = dir;
+            _targetPos = _rb.position + _dir;
+            Vector3Int targetGridPos = Vector3Int.RoundToInt(_targetPos);
+
+            if (GridManager.Instance.IsObjectAtPosition(targetGridPos))
             {
-                PushObject(nextObj, deltaX, deltaY, deltaZ);
+                _targetObject =  GridManager.Instance.GetObjectAtPosition(targetGridPos);
+                _targetObject.Interact();
             }
-            gridManager.MoveObjectInGrid(obj, newObjX, newObjY, newObjZ);
+            else
+            {
+                _isMoving = true;
+            }
         }
     }
 
-    bool CanMoveTo(int x, int y, int z)
+    private void ApplyRotation()
     {
-        return x >= 0 && y >= 0 && z >= 0 && x < gridManager.gridSizeX && y < gridManager.gridSizeY && z < gridManager.gridSizeZ;
+        if (_dir.normalized != Vector3.zero)
+            transform.rotation = Quaternion.LookRotation(_dir.normalized);
+    }
+
+    private bool CanMoveTo(Vector3 dir)
+    {
+        if (GridManager.Instance == null)
+        {
+            Debug.LogError("GridManager.Instance is null");
+            return false;
+        }
+
+        Vector3Int targetGridPos = Vector3Int.RoundToInt(_rb.position + dir);
+
+        return targetGridPos.x >= 0 && targetGridPos.x < GridManager.Instance.x &&
+               targetGridPos.y >= 0 && targetGridPos.y < GridManager.Instance.y &&
+               targetGridPos.z >= 0 && targetGridPos.z < GridManager.Instance.z;// &&
+                                                                                //!GridManager.Instance.IsObjectAtPosition(targetGridPos);
     }
 }
