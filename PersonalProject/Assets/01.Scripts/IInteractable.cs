@@ -3,8 +3,5 @@ using UnityEngine;
 
 public interface IInteractable
 {
-    void Interact()
-    {
-        Debug.Log("¿Ó");
-    }
+    void Interact(Vector3 dir);
 }

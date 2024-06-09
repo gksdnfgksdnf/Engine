@@ -4,12 +4,9 @@ public class PlayerController : MonoBehaviour
 {
     private Rigidbody _rb;
     private Vector3 _dir;
-    private Vector3 _targetPos;
-    [SerializeField] private Object _targetObject;
+    private Vector3Int _targetPos;
     private bool _isMoving = false;
     [SerializeField] private float _playerSpeed = 5f;
-
-    public Vector3 Direction => _dir;
 
     private void Awake()
     {
@@ -23,17 +20,20 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        MoveInput();
+        if (!_isMoving)
+        {
+            MoveInput();
+        }
         MovePlayer();
         ApplyRotation();
     }
 
     private void MoveInput()
     {
-        if (Input.GetKeyDown(KeyCode.W)) SetDirection(Vector3.forward);
-        else if (Input.GetKeyDown(KeyCode.S)) SetDirection(Vector3.back);
-        else if (Input.GetKeyDown(KeyCode.A)) SetDirection(Vector3.left);
-        else if (Input.GetKeyDown(KeyCode.D)) SetDirection(Vector3.right);
+        if (Input.GetKeyDown(KeyCode.W)) SetDirection(Vector3Int.forward);
+        else if (Input.GetKeyDown(KeyCode.S)) SetDirection(Vector3Int.back);
+        else if (Input.GetKeyDown(KeyCode.A)) SetDirection(Vector3Int.left);
+        else if (Input.GetKeyDown(KeyCode.D)) SetDirection(Vector3Int.right);
     }
 
     private void MovePlayer()
@@ -46,40 +46,37 @@ public class PlayerController : MonoBehaviour
         if (Vector3.Distance(_rb.position, _targetPos) <= 0.01f)
         {
             _rb.position = _targetPos; // 정확한 위치
-            GridManager.Instance.SetPlayer(new Vector3Int((int)_rb.position.x, (int)_rb.position.y, (int)_rb.position.z));
+            GridManager.Instance.SetPlayer(_targetPos);
             _isMoving = false;
         }
     }
 
-    private void SetDirection(Vector3 dir)
+    private void SetDirection(Vector3Int dir)
     {
         if (CanMoveTo(dir))
         {
-            if (_isMoving) return;
-
             _dir = dir;
-            _targetPos = _rb.position + _dir;
-            Vector3Int targetGridPos = Vector3Int.RoundToInt(_targetPos);
+            _targetPos = Vector3Int.RoundToInt(_rb.position + _dir);
 
-            if (GridManager.Instance.IsObjectAtPosition(targetGridPos))
+            if (GridManager.Instance.IsObjectAtPosition(_targetPos))
             {
-                _targetObject =  GridManager.Instance.GetObjectAtPosition(targetGridPos);
-                _targetObject.Interact();
+                Object obj = GridManager.Instance.GetObjectAtPosition(_targetPos);
+                GridManager.Instance.SetObject(_targetPos, obj);
+                obj.Interact(dir);
+                Debug.Log("이동");
             }
-            else
-            {
-                _isMoving = true;
-            }
+            _isMoving = true;
+
         }
     }
 
     private void ApplyRotation()
     {
-        if (_dir.normalized != Vector3.zero)
+        if (_dir != Vector3Int.zero)
             transform.rotation = Quaternion.LookRotation(_dir.normalized);
     }
 
-    private bool CanMoveTo(Vector3 dir)
+    private bool CanMoveTo(Vector3Int dir)
     {
         if (GridManager.Instance == null)
         {
@@ -89,9 +86,8 @@ public class PlayerController : MonoBehaviour
 
         Vector3Int targetGridPos = Vector3Int.RoundToInt(_rb.position + dir);
 
-        return targetGridPos.x >= 0 && targetGridPos.x < GridManager.Instance.x &&
-               targetGridPos.y >= 0 && targetGridPos.y < GridManager.Instance.y &&
-               targetGridPos.z >= 0 && targetGridPos.z < GridManager.Instance.z;// &&
-                                                                                //!GridManager.Instance.IsObjectAtPosition(targetGridPos);
+        return targetGridPos.x >= 0 && targetGridPos.x <= GridManager.Instance.x &&
+               targetGridPos.y >= 0 && targetGridPos.y <= GridManager.Instance.y &&
+               targetGridPos.z >= 0 && targetGridPos.z <= GridManager.Instance.z;
     }
 }

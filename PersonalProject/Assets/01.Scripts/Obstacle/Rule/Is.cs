@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Is : MonoBehaviour
 {
-    private Babo babo;
-    [SerializeField] float _range = 2f;
     [SerializeField] private LayerMask _whatisTarget;
     [SerializeField] bool _you;
     [SerializeField] private bool _rock;
@@ -24,7 +22,6 @@ public class Is : MonoBehaviour
         {
             _you = false;
             _push = false;
-
         }
 
         if (isHitVertical)
@@ -35,7 +32,6 @@ public class Is : MonoBehaviour
         {
             _you = false;
             _push = false;
-
         }
     }
 
