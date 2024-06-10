@@ -10,6 +10,7 @@ TagManager:
   - You
   - Is
   - Push
+  - Win
   layers:
   - Default
   - TransparentFX
@@ -19,11 +20,11 @@ TagManager:
   - UI
   - Obstacle
   - Player
-  - You
+  - 
   - Push
   - Is
-  - 
-  - 
+  - Win
+  - You
   - 
   - 
   - 

@@ -14,18 +14,4 @@ public class RuleManager : MonoBehaviour
     {
         instance = this;
     }
-
-    public bool BaboIsYou()
-    {
-        return _babo.Is() && _is.You();
-    }
-    public bool RockIsYou()
-    {
-        return _rock.Is() && _is.Rock();
-    }
-
-    public bool RockIsPush()
-    {
-        return _rock.Is() && _is.Push();
-    }
 }

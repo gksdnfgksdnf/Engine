@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerInput : MonoBehaviour
 {
     public event Action<Vector3> OnMove;
-    public event Action<Vector3> OnObstacle;
 
     void Update()
     {
@@ -14,7 +13,7 @@ public class PlayerInput : MonoBehaviour
 
     private void Movement()
     {
-        if (!RuleManager.instance.BaboIsYou()) return;
+        //if (!RuleManager.instance.BaboIsYou()) return;
 
         if (Input.GetKeyDown(KeyCode.W))
             OnMove?.Invoke(Vector3.forward);

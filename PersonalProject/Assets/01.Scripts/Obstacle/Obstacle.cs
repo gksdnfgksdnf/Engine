@@ -4,7 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class Obstacle : MonoBehaviour
 {
-    [SerializeField] private bool _rock = false;
+    [SerializeField] private bool _static = false;
 
     private Rigidbody _rb;
     private Vector3 _targetPosition;
@@ -17,12 +17,15 @@ public class Obstacle : MonoBehaviour
 
     private void Awake()
     {
+        gameObject.layer = LayerMask.NameToLayer("Obstacle");
         _rb = GetComponent<Rigidbody>();
+        _whatisObstacle = 1 << LayerMask.NameToLayer("Obstacle");
+        _rb.useGravity = false;
     }
 
     private void FixedUpdate()
     {
-        if (_rock && RuleManager.instance.RockIsPush()) return;
+        if (_static) return;
 
         if (_isMoving)
             Move();
