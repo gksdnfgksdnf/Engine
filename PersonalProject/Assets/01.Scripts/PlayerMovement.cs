@@ -10,8 +10,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _speed = 20f;
     private Vector3 _moveDir = Vector3.zero;
     private Vector3 _targetPos;
-    private Vector3 _lastPos;
-    private Quaternion _initRot;
 
     private bool _isMoving = false;
 
@@ -36,20 +34,22 @@ public class PlayerMovement : MonoBehaviour
         gameObject.layer = LayerMask.NameToLayer("Player");
         _rb = GetComponent<Rigidbody>();
         _rb.useGravity = false;
-        _initRot = transform.rotation;
-        _lastPos = _rb.position;
         _whatisObstacle = 1 << LayerMask.NameToLayer("Obstacle");
     }
 
     private void Update()
     {
-        Movement();
-
         if (Input.GetKeyDown(KeyCode.Z))
         {
             UndoObstacle();
             UndoLastMove();
         }
+
+        Movement();
+        DrawRays();
+
+        if (_isMoving)
+            Move();
     }
 
     private void Movement()
@@ -70,8 +70,6 @@ public class PlayerMovement : MonoBehaviour
 
         if (_isMoving) return;
 
-        _lastPos = _targetPos;
-
         _moveHisTory.Push((_rb.position, transform.rotation));
         _moveDir = direction;
         _targetPos = _rb.position + _moveDir;
@@ -83,14 +81,6 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    private void FixedUpdate()
-    {
-        DrawRays();
-
-        if (_isMoving)
-            Move();
-    }
-
     private void Move()
     {
         Vector3 newPosition = Vector3.MoveTowards(_rb.position, _targetPos, _speed * Time.fixedDeltaTime);
@@ -99,6 +89,7 @@ public class PlayerMovement : MonoBehaviour
         if (Vector3.Distance(_rb.position, _targetPos) <= 0.01f)
         {
             _rb.position = _targetPos;
+            Debug.Log("목표 위치로 즉시 이동");
             _isMoving = false;
         }
     }
@@ -138,7 +129,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (_isObstacleMove == false)
+        if (!_isObstacleMove)
             _obstacleMove.Push(false);
 
         _isObstacleMove = false;
