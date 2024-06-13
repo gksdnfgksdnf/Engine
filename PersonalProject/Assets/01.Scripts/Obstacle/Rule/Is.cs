@@ -7,7 +7,7 @@ public class Is : MonoBehaviour
     [SerializeField] private LayerMask _whatisTarget;
     [SerializeField] private int _range;
 
-    [SerializeField] private bool _isComponentAdded = false;
+    [SerializeField] private bool _isActioned = false;
     private bool _isDestroyComponent;
 
     public void DrawRay(Vector3 dir, GameObject gameObj)
@@ -16,8 +16,7 @@ public class Is : MonoBehaviour
 
         if (isHit)
         {
-            if (_isComponentAdded) return;
-            Debug.Log("You, Push, Win중 하나가 닿음");
+            if (_isActioned) return;
 
             _isDestroyComponent = false;
 
@@ -25,8 +24,6 @@ public class Is : MonoBehaviour
             {
                 if (you.gameObject.CompareTag("You"))
                 {
-                    Debug.Log(gameObj.name + "이/가 You가 된다");
-
                     DestroyAllComponents(gameObj);
 
                     gameObj.AddComponent<Player>();
@@ -38,28 +35,27 @@ public class Is : MonoBehaviour
             {
                 if (push.gameObject.CompareTag("Push"))
                 {
-                    Debug.Log(gameObj.name + "은 밀리는 속성을 가진다");
                     DestroyAllComponents(gameObj);
                     gameObj.AddComponent<Obstacle>();
                 }
 
             }
+
             if (hit.collider.TryGetComponent(out Win win))
             {
                 if (win.gameObject.CompareTag("Win"))
                 {
-                    Debug.Log(gameObj.name + "은 닿으면 승리한다.");
-
                     DestroyAllComponents(gameObj);
                     gameObj.AddComponent<Win>();
                 }
 
             }
-            _isComponentAdded = true;
+            _isActioned = true;
         }
         else
         {
-            _isComponentAdded = false;
+            _isActioned = false;
+            
             DestroyAllComponents(gameObj);
         }
     }

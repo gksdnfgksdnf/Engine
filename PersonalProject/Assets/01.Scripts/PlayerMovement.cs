@@ -89,7 +89,6 @@ public class PlayerMovement : MonoBehaviour
         if (Vector3.Distance(_rb.position, _targetPos) <= 0.01f)
         {
             _rb.position = _targetPos;
-            Debug.Log("목표 위치로 즉시 이동");
             _isMoving = false;
         }
     }
