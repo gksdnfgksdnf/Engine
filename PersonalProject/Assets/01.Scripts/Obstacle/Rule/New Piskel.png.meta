@@ -1,0 +1,356 @@
+fileFormatVersion: 2
+guid: d1c0701875ff82641ae673909e920837
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 24
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Chest_Subject
+      rect:
+        serializedVersion: 2
+        x: 264
+        y: 264
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f5b40d7766c80fd4785a3616bf4ef0d9
+      internalID: -1920047163
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lock
+      rect:
+        serializedVersion: 2
+        x: 264
+        y: 240
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7204055017619db43863a9677715b862
+      internalID: 588336634
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Get
+      rect:
+        serializedVersion: 2
+        x: 264
+        y: 216
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 56388e1904ebf7444982c60ad01de98c
+      internalID: -1359321688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Coin
+      rect:
+        serializedVersion: 2
+        x: 264
+        y: 192
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 83c0eac1936d4a442a0e91cc660e996f
+      internalID: -1941509403
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 2da7d27963f1a3b4abb064a3c24115ad
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      Chest_Subject: -1920047163
+      Coin: -1941509403
+      Get: -1359321688
+      Lock: 588336634
+      New Piskel_0: 1014132829
+      New Piskel_1: 1125322419
+      New Piskel_10: -392785479
+      New Piskel_100: -317922656
+      New Piskel_101: -479365716
+      New Piskel_102: 527363625
+      New Piskel_103: 1249258401
+      New Piskel_104: -251463702
+      New Piskel_105: 2123743042
+      New Piskel_106: -63444350
+      New Piskel_107: 561385241
+      New Piskel_108: 792976631
+      New Piskel_109: 865783821
+      New Piskel_110: 1077942355
+      New Piskel_111: 421715566
+      New Piskel_112: -647744274
+      New Piskel_113: 930786518
+      New Piskel_114: 1040448812
+      New Piskel_115: 1238312469
+      New Piskel_116: 1571897329
+      New Piskel_117: 611585386
+      New Piskel_118: 1411202360
+      New Piskel_119: 768709990
+      New Piskel_12: 756569478
+      New Piskel_120: 1824579443
+      New Piskel_121: 246835247
+      New Piskel_122: -624160332
+      New Piskel_123: 1358734095
+      New Piskel_124: 1831728045
+      New Piskel_125: 1635986051
+      New Piskel_126: 891631405
+      New Piskel_127: -2024051845
+      New Piskel_128: 2103935771
+      New Piskel_129: -1273197771
+      New Piskel_13: 329533772
+      New Piskel_130: 532381392
+      New Piskel_131: 1879979571
+      New Piskel_14: -281186456
+      New Piskel_15: -286191298
+      New Piskel_16: -713218337
+      New Piskel_17: 1976822430
+      New Piskel_18: 549299065
+      New Piskel_19: 641525365
+      New Piskel_2: -245044989
+      New Piskel_20: 579039481
+      New Piskel_21: -213749813
+      New Piskel_22: -1935218031
+      New Piskel_24: 1866962558
+      New Piskel_25: -833137387
+      New Piskel_26: -1328620463
+      New Piskel_27: -736129914
+      New Piskel_28: 1546293238
+      New Piskel_29: 398909192
+      New Piskel_3: 1012919685
+      New Piskel_30: 1788184646
+      New Piskel_31: 1562332900
+      New Piskel_32: -1549748506
+      New Piskel_33: 1424971561
+      New Piskel_34: -1714588179
+      New Piskel_36: 1927176116
+      New Piskel_37: 515081532
+      New Piskel_38: -99610996
+      New Piskel_39: 304013380
+      New Piskel_4: -938247924
+      New Piskel_40: 945943509
+      New Piskel_41: -1045338407
+      New Piskel_42: 115079743
+      New Piskel_43: -1559287077
+      New Piskel_44: -154208389
+      New Piskel_45: 357040668
+      New Piskel_46: 325204204
+      New Piskel_48: -2119187613
+      New Piskel_49: -490853164
+      New Piskel_5: 792310272
+      New Piskel_50: 961409969
+      New Piskel_51: 2046699098
+      New Piskel_52: 863601861
+      New Piskel_53: 1498492665
+      New Piskel_54: 136475549
+      New Piskel_55: -1995978477
+      New Piskel_56: -1843346535
+      New Piskel_57: 1714305548
+      New Piskel_58: -858224868
+      New Piskel_59: 1407477056
+      New Piskel_6: 112353036
+      New Piskel_60: 1162597314
+      New Piskel_61: 1417344593
+      New Piskel_62: -1990382269
+      New Piskel_63: -794341947
+      New Piskel_64: 774027839
+      New Piskel_65: -1542685575
+      New Piskel_66: 1699878705
+      New Piskel_67: -97789562
+      New Piskel_68: 554329057
+      New Piskel_69: -1750899644
+      New Piskel_7: -2077020943
+      New Piskel_70: 2045998083
+      New Piskel_71: -2127413203
+      New Piskel_72: -1670121658
+      New Piskel_73: -581808435
+      New Piskel_74: 1434788446
+      New Piskel_75: -2070287407
+      New Piskel_76: -722899776
+      New Piskel_77: -1694081219
+      New Piskel_78: 2067826356
+      New Piskel_79: 133265254
+      New Piskel_8: -14141452
+      New Piskel_80: 133829859
+      New Piskel_81: 942095985
+      New Piskel_82: 1109198
+      New Piskel_83: -915324710
+      New Piskel_84: -963591270
+      New Piskel_85: 608629278
+      New Piskel_86: -2098782810
+      New Piskel_87: -1014661952
+      New Piskel_88: 183562383
+      New Piskel_89: 1969041115
+      New Piskel_9: -994877119
+      New Piskel_90: 483162056
+      New Piskel_91: -681750322
+      New Piskel_92: -597646271
+      New Piskel_93: 474172272
+      New Piskel_94: 263274814
+      New Piskel_95: -1722343776
+      New Piskel_96: -614059102
+      New Piskel_97: -1975581261
+      New Piskel_98: -2105301292
+      New Piskel_99: 1885834393
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

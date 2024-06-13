@@ -1,0 +1,12 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="container" style="flex-grow: 1; align-items: center; justify-content: flex-start;">
+        <ui:VisualElement name="Title" style="flex-grow: 0; width: 100%; align-items: center; justify-content: center; flex-basis: 400px;">
+            <ui:Label tabindex="-1" text="Baba Is You" parse-escape-sequences="true" display-tooltip-when-elided="true" name="title_label" style="-unity-font: url(&apos;project://database/Assets/01.Scripts/Text/DNFBitBitv2_TTF/DNFBitBitv2.ttf?fileID=12800000&amp;guid=bd6ba64812e09c34d92f227a445e3e0d&amp;type=3#DNFBitBitv2&apos;); font-size: 100px; -unity-font-definition: initial; color: rgb(217, 55, 106);" />
+        </ui:VisualElement>
+        <ui:VisualElement name="contant" style="flex-grow: 1;">
+            <ui:Label tabindex="-1" text="Start the Game" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Label" style="-unity-font-definition: initial; -unity-font: url(&apos;project://database/Assets/01.Scripts/Text/DNFBitBitv2_TTF/DNFBitBitv2.ttf?fileID=12800000&amp;guid=bd6ba64812e09c34d92f227a445e3e0d&amp;type=3#DNFBitBitv2&apos;);" />
+            <ui:Label tabindex="-1" text="Settings" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Label" style="-unity-font-definition: initial; -unity-font: url(&apos;project://database/Assets/01.Scripts/Text/DNFBitBitv2_TTF/DNFBitBitv2.ttf?fileID=12800000&amp;guid=bd6ba64812e09c34d92f227a445e3e0d&amp;type=3#DNFBitBitv2&apos;);" />
+            <ui:Label tabindex="-1" text="Exit the Game" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Label" style="-unity-font-definition: initial; -unity-font: url(&apos;project://database/Assets/01.Scripts/Text/DNFBitBitv2_TTF/DNFBitBitv2.ttf?fileID=12800000&amp;guid=bd6ba64812e09c34d92f227a445e3e0d&amp;type=3#DNFBitBitv2&apos;);" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
