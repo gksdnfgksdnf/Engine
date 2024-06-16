@@ -21,8 +21,12 @@ public class Subject : MonoBehaviour
             Vector3 direction = _directions[i];
             bool isHit = Physics.Raycast(transform.position, direction, out RaycastHit hit, _range, _whatisTarget);
 
-            if (isHit && hit.collider.TryGetComponent(out Is Is))
-                Is.DrawRay(direction, _subjectObj);
+            if (isHit)
+            {
+                if (hit.collider.TryGetComponent(out Is Is))
+                    Is.DrawRay(direction, _subjectObj);
+
+            }
         }
     }
 }

@@ -7,30 +7,18 @@ public class Win : MonoBehaviour
 
     private void Awake()
     {
-        _whatIsPlayer = 1 << LayerMask.NameToLayer("Player");
+        _whatIsPlayer = LayerMask.GetMask("Player");
         _range = .9f;
     }
 
-    void Update()
+    private void OnTriggerEnter(Collider other)
     {
-        CheckPlayer();
+        if(other.gameObject.CompareTag("Player"))
+        {
+            Debug.Log("Win");
+        }
     }
 
-    void CheckPlayer()
-    {
-        bool isHit = Physics.BoxCast(transform.position, transform.lossyScale * 0.5f,
-                                Vector3.zero, out RaycastHit hit, transform.rotation, _range, _whatIsPlayer);
-        if (isHit)
-        {
-
-        }
-        else
-        {
-
-        }
-
-
-    }
 
     private void OnDrawGizmos()
     {
@@ -42,7 +30,6 @@ public class Win : MonoBehaviour
 
             Gizmos.color = Color.red;
             Gizmos.DrawWireCube(transform.position, transform.lossyScale);
-            print(" FUCK YOU");
         }
         else
         {

@@ -1,6 +1,6 @@
 .button {
     -unity-font-definition: initial;
-    -unity-font: url('project://database/Assets/01.Scripts/Text/DNFBitBitv2_TTF/DNFBitBitv2.ttf?fileID=12800000&guid=bd6ba64812e09c34d92f227a445e3e0d&type=3#DNFBitBitv2');
+    -unity-font: url('project://database/Assets/01.Scripts/UI/DNFBitBitv2_TTF/DNFBitBitv2.ttf?fileID=12800000&guid=bd6ba64812e09c34d92f227a445e3e0d&type=3#DNFBitBitv2');
     font-size: 30px;
     -unity-text-align: upper-center;
     border-left-color: rgb(79, 90, 149);
@@ -33,4 +33,28 @@
 
 .button:hover {
     background-color: rgb(79, 90, 149);
+}
+
+.setting-content {
+    flex-basis: 100px;
+    align-items: center;
+    justify-content: flex-start;
+    width: 50%;
+    flex-direction: row;
+}
+
+.setting-lbl {
+    -unity-text-align: middle-center;
+    -unity-font-definition: initial;
+    -unity-font: url('project://database/Assets/01.Scripts/UI/DNFBitBitv2_TTF/DNFBitBitv2.ttf?fileID=12800000&guid=bd6ba64812e09c34d92f227a445e3e0d&type=3#DNFBitBitv2');
+    color: rgb(255, 255, 255);
+    font-size: 30px;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
 }

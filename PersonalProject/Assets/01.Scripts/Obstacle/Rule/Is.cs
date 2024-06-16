@@ -50,12 +50,25 @@ public class Is : MonoBehaviour
                 }
 
             }
+
+            if (hit.collider.TryGetComponent(out Subject s))
+            {
+                if(hit.collider.gameObject.CompareTag("Flag"))
+                {
+                    DestroyAllComponents(gameObj);
+                    gameObj.AddComponent<Win>();
+                }
+
+
+            }
+
+
             _isActioned = true;
         }
         else
         {
             _isActioned = false;
-            
+            _isDestroyComponent = false;
             DestroyAllComponents(gameObj);
         }
     }
