@@ -7,13 +7,14 @@ public class SettingToggle : MonoBehaviour
 {
     private UIDocument _uiDocument;
 
-    private Toggle _sound;
+    private VisualElement _settings;
 
-    private VisualElement _soundVisual;
+    private Toggle _total;
+    private Toggle _bgm;
+    private Toggle _effect;
 
-    private Label _soundLabel;
+    private Label _exit;
 
-    [SerializeField]private Font _font;
     private void Awake()
     {
         _uiDocument = GetComponent<UIDocument>();
@@ -21,17 +22,49 @@ public class SettingToggle : MonoBehaviour
 
     private void OnEnable()
     {
-        var root = _uiDocument.rootVisualElement.Q<VisualElement>("settings");
+        var root = _uiDocument.rootVisualElement;
 
-        _sound = root.Q<Toggle>("sound-toggle");
+        _settings = root.Q<VisualElement>("settings");
+
+        _exit = root.Q<Label>("exit");
+
+        _total = root.Q<Toggle>("total-sound-toggle");
+        _bgm = root.Q<Toggle>("bgm-toggle");
+        _effect = root.Q<Toggle>("effect-sound-toggle");
 
 
-        _soundLabel = _sound.Q<Label>();
-        _soundVisual = _sound.Q<VisualElement>();
+        _exit.RegisterCallback<ClickEvent>(evt =>
+        {
+            _settings.style.display = DisplayStyle.None;
+        });
 
-        _soundLabel.style.fontSize = 30;
-        _soundLabel.style.unityFont = _font;
-        _soundLabel.style.color = Color.white;
+
+        _total.RegisterValueChangedCallback(evt =>
+        {
+            if (evt.newValue)
+                Debug.Log("total Toggle is on");
+            else
+                Debug.Log("total Toggle is off");
+        });
+
+        _bgm.RegisterValueChangedCallback(evt =>
+        {
+            if (evt.newValue)
+                Debug.Log("bgm Toggle is on");
+            else
+                Debug.Log("bgm Toggle is off");
+        });
+
+        _effect.RegisterValueChangedCallback(evt =>
+        {
+            if (evt.newValue)
+                Debug.Log("effect Toggle is on");
+            else
+                Debug.Log("effect Toggle is off");
+        });
+
+
+
 
     }
 }

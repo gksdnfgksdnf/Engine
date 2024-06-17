@@ -1,7 +1,7 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/10.%20UiToolkit/MainScene.uss?fileID=7433441132597879392&amp;guid=448aa3c76988a7d4a877850c8e8ecdd2&amp;type=3#MainScene" />
     <ui:VisualElement name="container" style="flex-grow: 1; align-items: center; justify-content: flex-start;">
-        <ui:VisualElement name="mainscreen" style="flex-grow: 1; width: 100%; left: -100%;">
+        <ui:VisualElement name="mainscreen" style="flex-grow: 1; width: 100%; left: 0;">
             <ui:VisualElement name="main-title-bar" style="flex-grow: 0; width: 100%; align-items: center; justify-content: center; flex-basis: 400px;">
                 <ui:VisualElement name="title" style="flex-grow: 0; flex-direction: row;">
                     <ui:Label tabindex="-1" text="Baba" parse-escape-sequences="true" display-tooltip-when-elided="true" name="baba" style="font-size: 100px; color: rgb(217, 56, 106); -unity-text-align: upper-center; -unity-font-definition: initial; -unity-font: url(&apos;project://database/Assets/01.Scripts/UI/DNFBitBitv2_TTF/DNFBitBitv2.ttf?fileID=12800000&amp;guid=bd6ba64812e09c34d92f227a445e3e0d&amp;type=3#DNFBitBitv2&apos;); padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-right: 25px; scale: 1 1;" />
@@ -14,16 +14,34 @@
                 <ui:Label tabindex="-1" text="Settings" parse-escape-sequences="true" display-tooltip-when-elided="true" name="settings" class="button" style="-unity-font-definition: initial; -unity-font: url(&apos;project://database/Assets/01.Scripts/UI/DNFBitBitv2_TTF/DNFBitBitv2.ttf?fileID=12800000&amp;guid=bd6ba64812e09c34d92f227a445e3e0d&amp;type=3#DNFBitBitv2&apos;); font-size: 30px; -unity-text-align: middle-center; color: rgb(255, 255, 255);" />
                 <ui:Label tabindex="-1" text="Exit the Game" parse-escape-sequences="true" display-tooltip-when-elided="true" name="exit-game" class="button" style="-unity-font-definition: initial; -unity-font: url(&apos;project://database/Assets/01.Scripts/UI/DNFBitBitv2_TTF/DNFBitBitv2.ttf?fileID=12800000&amp;guid=bd6ba64812e09c34d92f227a445e3e0d&amp;type=3#DNFBitBitv2&apos;); font-size: 30px; -unity-text-align: middle-center; color: rgb(255, 255, 255);" />
             </ui:VisualElement>
+            <ui:VisualElement name="quit" style="flex-grow: 0; position: absolute; width: 100%; height: 100%; align-items: center; justify-content: center;">
+                <ui:VisualElement name="quit-content" style="flex-grow: 0; width: 700px; height: 700px; background-color: rgb(33, 42, 65); border-left-color: rgb(72, 83, 136); border-right-color: rgb(72, 83, 136); border-top-color: rgb(72, 83, 136); border-bottom-color: rgb(72, 83, 136); border-top-width: 5px; border-right-width: 5px; border-bottom-width: 5px; border-left-width: 5px; border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; align-items: center; justify-content: flex-start; transition-duration: 0.5s; transition-timing-function: ease-out-back; transition-property: top;">
+                    <ui:VisualElement name="quit-topside-bar" style="flex-grow: 0; flex-basis: 100px; align-items: center; justify-content: center; width: 100%; border-bottom-width: 5px; border-bottom-right-radius: 0; border-bottom-left-radius: 0; border-left-color: rgb(72, 83, 136); border-right-color: rgb(72, 83, 136); border-top-color: rgb(72, 83, 136); border-bottom-color: rgb(72, 83, 136); border-top-left-radius: 0; border-top-right-radius: 0;">
+                        <ui:Label tabindex="-1" text="You will leave?" parse-escape-sequences="true" display-tooltip-when-elided="true" name="quit" style="-unity-font-definition: initial; -unity-font: url(&apos;project://database/Assets/01.Scripts/UI/DNFBitBitv2_TTF/DNFBitBitv2.ttf?fileID=12800000&amp;guid=bd6ba64812e09c34d92f227a445e3e0d&amp;type=3#DNFBitBitv2&apos;); font-size: 45px; -unity-font-style: bold; -unity-text-align: upper-center; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; color: rgb(255, 255, 255);" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="quit-content" style="flex-grow: 1; width: 100%; flex-direction: row; align-items: center; justify-content: space-around;">
+                        <ui:Label tabindex="-1" text="Yes" parse-escape-sequences="true" display-tooltip-when-elided="true" name="yes" class="quit-btn" style="height: 100px; flex-basis: 200px;" />
+                        <ui:Label tabindex="-1" text="No" parse-escape-sequences="true" display-tooltip-when-elided="true" name="no" class="quit-btn" style="flex-basis: 200px; height: 100px;" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
             <ui:VisualElement name="fade" style="flex-grow: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0); position: absolute; visibility: hidden; display: flex;" />
         </ui:VisualElement>
-        <ui:VisualElement name="settings" style="flex-grow: 1; width: 100%; height: 100%; visibility: visible; display: flex; position: absolute;">
-            <ui:VisualElement name="setting-title-bar" style="flex-grow: 0; align-items: center; justify-content: center; flex-basis: 200px;">
-                <ui:Label tabindex="-1" text="Setting" parse-escape-sequences="true" display-tooltip-when-elided="true" name="setting-title-bar" style="-unity-font-definition: initial; -unity-font: url(&apos;project://database/Assets/01.Scripts/UI/DNFBitBitv2_TTF/DNFBitBitv2.ttf?fileID=12800000&amp;guid=bd6ba64812e09c34d92f227a445e3e0d&amp;type=3#DNFBitBitv2&apos;); padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; font-size: 100px; -unity-text-align: middle-center; -unity-font-style: normal; color: rgb(255, 255, 255);" />
+        <ui:VisualElement name="settings" style="flex-grow: 1; width: 100%; height: 100%; visibility: visible; display: none; position: absolute;">
+            <ui:VisualElement name="setting-title-bar" style="flex-grow: 0; align-items: center; justify-content: center; flex-basis: 230px; flex-direction: row;">
+                <ui:Label tabindex="-1" text="Setting" parse-escape-sequences="true" display-tooltip-when-elided="true" name="setting-title" style="-unity-font-definition: initial; -unity-font: url(&apos;project://database/Assets/01.Scripts/UI/DNFBitBitv2_TTF/DNFBitBitv2.ttf?fileID=12800000&amp;guid=bd6ba64812e09c34d92f227a445e3e0d&amp;type=3#DNFBitBitv2&apos;); padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; font-size: 100px; -unity-text-align: middle-center; -unity-font-style: normal; color: rgb(255, 255, 255);" />
+                <ui:Label tabindex="-1" text="X" parse-escape-sequences="true" display-tooltip-when-elided="true" name="exit" class="button" style="color: rgb(255, 255, 255); -unity-text-align: middle-center; flex-basis: 70px; margin-right: 10px; width: 70px; position: absolute; right: 30px; height: 70px;" />
             </ui:VisualElement>
-            <ui:VisualElement name="content" style="flex-grow: 1; align-items: center; justify-content: center;">
-                <ui:VisualElement name="sound" class="setting-content" style="justify-content: flex-start;">
-                    <ui:Toggle label="Toggle" name="sound-toggle" />
-                </ui:VisualElement>
+            <ui:VisualElement name="sound-content" style="flex-grow: 1; align-items: center; justify-content: center; visibility: visible;">
+                <ui:Toggle name="total-sound-toggle" class="toggle" style="flex-direction: row-reverse; justify-content: space-around; width: 300px; flex-basis: 100px; align-items: center; -unity-text-align: upper-center; overflow: visible; display: flex; margin-right: 0;">
+                    <ui:Label tabindex="-1" text="Total Sound" parse-escape-sequences="true" display-tooltip-when-elided="true" name="total-sound-lbl" style="padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 0; margin-right: 31px; margin-bottom: 0; margin-left: 15px;" />
+                </ui:Toggle>
+                <ui:Toggle name="bgm-toggle" class="toggle" style="flex-direction: row-reverse; justify-content: space-around; width: 300px; flex-basis: 100px; align-items: center; -unity-text-align: upper-center; overflow: visible; margin-right: 0;">
+                    <ui:Label tabindex="-1" text="BGM" parse-escape-sequences="true" display-tooltip-when-elided="true" name="bgm-lbl" style="padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 0; margin-right: 161px; margin-bottom: 0; margin-left: 15px;" />
+                </ui:Toggle>
+                <ui:Toggle name="effect-sound-toggle" class="toggle" style="flex-direction: row-reverse; justify-content: space-around; width: 300px; flex-basis: 100px; align-items: center; padding-right: 0; -unity-text-align: upper-center; padding-bottom: 0; padding-left: 0; overflow: visible; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;">
+                    <ui:Label tabindex="-1" text="Effect Sound" parse-escape-sequences="true" display-tooltip-when-elided="true" name="effect-sound-lbl" style="padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 0; margin-right: 10px; margin-bottom: 0; margin-left: 15px;" />
+                </ui:Toggle>
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
