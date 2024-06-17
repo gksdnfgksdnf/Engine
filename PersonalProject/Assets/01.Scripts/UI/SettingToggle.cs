@@ -7,6 +7,7 @@ public class SettingToggle : MonoBehaviour
 {
     private UIDocument _uiDocument;
 
+    private VisualElement _main;
     private VisualElement _settings;
 
     private Toggle _total;
@@ -24,6 +25,7 @@ public class SettingToggle : MonoBehaviour
     {
         var root = _uiDocument.rootVisualElement;
 
+        _main = root.Q<VisualElement>("mainscreen");
         _settings = root.Q<VisualElement>("settings");
 
         _exit = root.Q<Label>("exit");
@@ -36,6 +38,7 @@ public class SettingToggle : MonoBehaviour
         _exit.RegisterCallback<ClickEvent>(evt =>
         {
             _settings.style.display = DisplayStyle.None;
+            _main.style.display = DisplayStyle.Flex;
         });
 
 

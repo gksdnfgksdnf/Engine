@@ -11,16 +11,16 @@ public class MainWindow : MonoBehaviour
     private VisualElement _main;
     private VisualElement _fade;
     private Label _startGame;
-    private Label _settings;
+    private Label _settingLabel;
+    private VisualElement _settings;
     private Label _exitGame;
     private event Action<bool> onComplete;
     private Color startColor;
 
-    private Label _quit;
-
-    private VisualElement _real;
-    private Label _realQuit;
-    private Label _realExit;
+    private VisualElement _quit;
+    private VisualElement _quitContent;
+    private Label _leave;
+    private Label _exit;
 
     private void Awake()
     {
@@ -32,18 +32,23 @@ public class MainWindow : MonoBehaviour
     {
         var root = _uiDocument.rootVisualElement;
 
+        _main = root.Q<VisualElement>("mainscreen");
+
         _fade = root.Q<VisualElement>("fade");
-        _fade.pickingMode = PickingMode.Ignore;
+        _fade.style.display = DisplayStyle.None;
+
         _startGame = root.Q<Label>("start-game");
 
-        _settings = root.Q<Label>("settings");
-        _settings.style.display = DisplayStyle.None;
+        _settingLabel = root.Q<Label>("settings-lbl");
+        _settings = root.Q<VisualElement>("settings");
 
         _exitGame = root.Q<Label>("exit-game");
 
-        _quit = root.Q<Label>("quit");
-        _realQuit = _real.Q<Label>("real-quit");
-        _realExit = _real.Q<Label>("real-exit");
+        _quit = root.Q<VisualElement>("quit");
+        _quitContent = root.Q<VisualElement>("quit-content");
+
+        _leave = _quitContent.Q<Label>("yes");
+        _exit = _quitContent.Q<Label>("no");
 
 
 
@@ -52,34 +57,36 @@ public class MainWindow : MonoBehaviour
             StartCoroutine(FadeIn(_fade, 2f, true));
         });
 
-        _settings.RegisterCallback<ClickEvent>(evt =>
+        _settingLabel.RegisterCallback<ClickEvent>(evt =>
         {
             _settings.style.display = DisplayStyle.Flex;
+            _main.style.display = DisplayStyle.None;
+
         });
 
         _exitGame.RegisterCallback<ClickEvent>(evt =>
         {
+            _quit.style.display = DisplayStyle.Flex;
+            _quitContent.style.top = new Length(0, LengthUnit.Percent);
+        });
+
+        _leave.RegisterCallback<ClickEvent>(evt =>
+        {
             StartCoroutine(FadeIn(_fade, 2f, false));
         });
 
-
-
-        _quit.RegisterCallback<ClickEvent>(evt =>
+        _exit.RegisterCallback<ClickEvent>(evt =>
         {
-            _settings.style.display = DisplayStyle.None;
+            _quitContent.style.top = new Length(-100, LengthUnit.Percent);
+            StartCoroutine(ExitCallback());
         });
 
-        _realQuit.RegisterCallback<ClickEvent>(evt =>
-        {
-            Application.Quit();
-        });
+    }
 
-        _realExit.RegisterCallback<ClickEvent>(evt =>
-        {
-            _real.style.display = DisplayStyle.None;
-            _settings.style.display = DisplayStyle.Flex;
-        });
-
+    private IEnumerator ExitCallback()
+    {
+        yield return new WaitForSeconds(.5f);
+        _quit.style.display = DisplayStyle.None;
     }
 
     private void SetBackgroundColor(VisualElement element, Color color)
@@ -89,6 +96,8 @@ public class MainWindow : MonoBehaviour
 
     private IEnumerator FadeIn(VisualElement element, float duration, bool isStart)
     {
+        _fade.style.display = DisplayStyle.Flex;
+
         startColor = element.resolvedStyle.backgroundColor;
         float time = 0f;
 
@@ -113,6 +122,9 @@ public class MainWindow : MonoBehaviour
         if (isStart)
             SceneManager.LoadScene(1); // 게임 시작
         else
+        {
+            Debug.Log("Application.Quit");
             Application.Quit(); // 게임 종료
+        }
     }
 }
