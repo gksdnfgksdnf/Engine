@@ -44,7 +44,7 @@ public class CheckObstacle : MonoBehaviour
             Vector3 direction = _directions[i];
             bool isHit = Physics.Raycast(transform.position, direction, out RaycastHit hit, _range, _whatisObstacle);
 
-            if (isHit && hit.collider.TryGetComponent<Obstacle>(out Obstacle obstacle))
+            if (isHit && hit.collider.TryGetComponent(out Obstacle obstacle))
                 _contactObjs[i] = obstacle; // 각 방향의 장애물을 저장
             else
                 _contactObjs[i] = null; // 장애물이 없으면 null로 설정
@@ -76,8 +76,8 @@ public class CheckObstacle : MonoBehaviour
         {
             bool isHit = Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, _range, _whatisObstacle);
 
-            if (isHit && hit.collider.TryGetComponent<Obstacle>(out Obstacle obstacle))
-                obstacle.UndoMove();
+            if (isHit && hit.collider.TryGetComponent(out Obstacle obstacle))
+                obstacle.UndoMove(transform.forward);
         }
     }
 

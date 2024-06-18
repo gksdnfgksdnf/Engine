@@ -141,7 +141,7 @@ public class PlayerMovement : MonoBehaviour
             bool isHit = Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, _range, _whatisObstacle);
 
             if (isHit && hit.collider.TryGetComponent<Obstacle>(out Obstacle obstacle))
-                obstacle.UndoMove();
+                obstacle.UndoMove(transform.forward);
         }
     }
 }

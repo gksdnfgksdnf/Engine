@@ -64,10 +64,15 @@ public class Obstacle : MonoBehaviour
             obstacle.StartMovement(direction);
     }
 
-    public void UndoMove()
+    public void UndoMove(Vector3 dir)
     {
         if (_positionHistory.Count > 0)
         {
+            if (Physics.Raycast(transform.position, dir, out RaycastHit hit, _range, _whatisObstacle))
+                if (hit.collider.TryGetComponent(out Obstacle obstacle))
+                    obstacle.UndoMove(dir);
+
+
             Vector3 lastPosition = _positionHistory.Pop();
             _targetPosition = lastPosition;
             _isMoving = true;
