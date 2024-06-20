@@ -1,18 +1,29 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Chest : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private Animator _open;
+    [SerializeField] private GameObject _target;
+    [SerializeField] private LayerMask _whatIsObstacle;
+    [SerializeField] private float _range = 1;
+    [SerializeField] private float fadeDuration = 2.0f; // 서서히 사라지는 시간
+
+    private void Start()
     {
-        
+        _open = GetComponentInChildren<Animator>();
+        _whatIsObstacle = 1 << LayerMask.NameToLayer("Obstacle");
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter(Collider other)
     {
-        
+        if (other.gameObject.CompareTag("Key"))
+        {
+            _open.SetTrigger("IsOpen");
+            Destroy(other.gameObject);
+            Destroy(gameObject);
+            Instantiate(_target, transform.position, Quaternion.identity);
+
+        }
     }
 }

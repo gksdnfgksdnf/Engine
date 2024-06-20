@@ -1,0 +1,71 @@
+.button {
+    -unity-font-definition: initial;
+    -unity-font: url('project://database/Assets/01.Scripts/UI/DNFBitBitv2_TTF/DNFBitBitv2.ttf?fileID=12800000&guid=bd6ba64812e09c34d92f227a445e3e0d&type=3#DNFBitBitv2');
+    font-size: 30px;
+    -unity-text-align: upper-center;
+    border-left-color: rgb(79, 90, 149);
+    border-right-color: rgb(79, 90, 149);
+    border-top-color: rgb(79, 90, 149);
+    border-bottom-color: rgb(79, 90, 149);
+    background-color: rgb(33, 42, 65);
+    border-top-width: 5px;
+    border-right-width: 5px;
+    border-bottom-width: 5px;
+    border-left-width: 5px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    flex-basis: 70px;
+    width: 600px;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 5px;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    transition-duration: 0.1s;
+    justify-content: center;
+    align-items: center;
+}
+
+.button:hover {
+    background-color: rgb(79, 90, 149);
+}
+
+.toggle {
+    -unity-font-definition: initial;
+    -unity-font: url('project://database/Assets/01.Scripts/UI/DNFBitBitv2_TTF/DNFBitBitv2.ttf?fileID=12800000&guid=bd6ba64812e09c34d92f227a445e3e0d&type=3#DNFBitBitv2');
+    font-size: 30px;
+    color: rgb(255, 255, 255);
+    border-left-color: rgb(79, 90, 149);
+    border-right-color: rgb(79, 90, 149);
+    border-top-color: rgb(79, 90, 149);
+    border-bottom-color: rgb(79, 90, 149);
+    border-top-width: 5px;
+    border-right-width: 5px;
+    border-bottom-width: 5px;
+    border-left-width: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    margin-top: 0;
+    margin-bottom: 5px;
+    margin-left: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    background-color: rgb(33, 42, 65);
+    visibility: visible;
+    align-items: center;
+    transition-duration: 0.3s;
+    transition-property: background-color;
+}
+
+.toggle:hover {
+    background-color: rgb(77, 87, 134);
+    transition-duration: 0.1s;
+}

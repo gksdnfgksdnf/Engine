@@ -1,7 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Is : MonoBehaviour
 {
@@ -9,9 +7,9 @@ public class Is : MonoBehaviour
     [SerializeField] private int _range;
 
     [SerializeField] private bool _isActioned = false;
-    private bool _isDestroyComponent;
+    private bool _isDestroyComponent = false; // 초기에는 false로 설정
 
-    public void DrawRay(Vector3 dir, GameObject gameObj)
+    public void DrawRay(Vector3 dir, GameObject[] gameObj)
     {
         bool isHit = Physics.Raycast(transform.position, dir, out RaycastHit hit, _range, _whatisTarget);
 
@@ -19,94 +17,106 @@ public class Is : MonoBehaviour
         {
             if (_isActioned) return;
 
-            _isDestroyComponent = false;
+            _isDestroyComponent = false; // 초기화
 
             if (hit.collider.TryGetComponent(out You you))
             {
                 if (you.gameObject.CompareTag("You"))
                 {
-                    DestroyAllComponents(gameObj);
+                    for (int i = 0; i < gameObj.Length; i++)
+                    {
+                        DestroyAllComponents(gameObj[i]);
 
-                    gameObj.AddComponent<Player>();
-                    gameObj.AddComponent<Movement>();
+                        gameObj[i].AddComponent<Player>();
+                        gameObj[i].AddComponent<Movement>();
+                    }
                 }
             }
 
             if (hit.collider.TryGetComponent(out Push push))
             {
-                if (push.gameObject.CompareTag("Push"))
+                for (int i = 0; i < gameObj.Length; i++)
                 {
-                    DestroyAllComponents(gameObj);
-                    gameObj.AddComponent<Obstacle>();
-                }
-
-            }
-
-            if (hit.collider.TryGetComponent(out Win win))
-            {
-                if (win.gameObject.CompareTag("Win"))
-                {
-                    DestroyAllComponents(gameObj);
-                    gameObj.AddComponent<Win>();
-                }
-
-            }
-
-            if (hit.collider.TryGetComponent(out Subject s))
-            {
-                if(hit.collider.gameObject.CompareTag("Flag"))
-                {
-                    DestroyAllComponents(gameObj);
-                    gameObj.AddComponent<Win>();
-                }
-
-                if(hit.collider.gameObject.CompareTag("Baba"))
-                {
-                    DestroyAllComponents(gameObj);
-                    gameObj.AddComponent<Player>();
-                    gameObj.AddComponent<Movement>();
-                }
-
-                if(hit.collider.gameObject.CompareTag("Rock"))
-                {
-                    DestroyAllComponents(gameObj);
-                    
-
-                    Component[] components = hit.collider.GetComponents<Component>();
-                    
-                    foreach(Component component in components)
+                    if (push.gameObject.CompareTag("Push"))
                     {
-                        if (component is MonoBehaviour)
-                        {
-                            Type componentType = component.GetType();
-                            gameObj.AddComponent(componentType);
-                        }
-
+                        DestroyAllComponents(gameObj[i]);
+                        gameObj[i].AddComponent<Obstacle>();
                     }
                 }
             }
 
+            if (hit.collider.TryGetComponent(out Win win))
+            {
+                for (int i = 0; i < gameObj.Length; i++)
+                {
+                    if (win.gameObject.CompareTag("Win"))
+                    {
+                        DestroyAllComponents(gameObj[i]);
+                        gameObj[i].AddComponent<Win>();
+                    }
+                }
+            }
+
+            if (hit.collider.TryGetComponent(out Subject s))
+            {
+                for (int i = 0; i < gameObj.Length; i++)
+                {
+                    if (hit.collider.gameObject.CompareTag("Flag"))
+                    {
+                        DestroyAllComponents(gameObj[i]);
+                        gameObj[i].AddComponent<Win>();
+                    }
+
+                    if (hit.collider.gameObject.CompareTag("Baba"))
+                    {
+                        DestroyAllComponents(gameObj[i]);
+                        gameObj[i].AddComponent<Player>();
+                        gameObj[i].AddComponent<Movement>();
+                    }
+
+                    if (hit.collider.gameObject.CompareTag("Rock"))
+                    {
+                        DestroyAllComponents(gameObj[i]);
+
+                        Component[] components = hit.collider.GetComponents<Component>();
+
+                        foreach (Component component in components)
+                        {
+                            if (component is MonoBehaviour)
+                            {
+                                Type componentType = component.GetType();
+                                gameObj[i].AddComponent(componentType);
+                            }
+                        }
+                    }
+                }
+            }
 
             _isActioned = true;
         }
         else
         {
             _isActioned = false;
-            _isDestroyComponent = false;
-            DestroyAllComponents(gameObj);
+            if (!_isDestroyComponent) // 한 번만 실행되도록 제어
+            {
+                for (int i = 0; i < gameObj.Length; i++)
+                    DestroyAllComponents(gameObj[i]);
+
+                _isDestroyComponent = true; // 파괴 작업이 한 번 완료되었음을 표시
+            }
         }
     }
 
     private void DestroyAllComponents(GameObject obj)
     {
-        if (_isDestroyComponent) return;
-
         Component[] components = obj.GetComponents<Component>();
 
         foreach (Component component in components)
+        {
             if (component is MonoBehaviour)
+            {
                 Destroy(component);
-
-        _isDestroyComponent = true;
+            }
+        }
     }
 }

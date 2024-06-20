@@ -7,7 +7,7 @@ public class Movement : MonoBehaviour
     private Rigidbody _rb;
 
     [SerializeField] private float _speed = 20f;
-    //private Vector3 _moveDir = Vector3.zero;
+    private Vector3 _moveDir = Vector3.zero;
     private Vector3 _targetPos;
     [SerializeField] private Transform _ladderStartPos;
     [SerializeField] private Transform _ladderEndPos;
@@ -43,7 +43,7 @@ public class Movement : MonoBehaviour
         _whatisLadder = 1 << LayerMask.NameToLayer("Ladder");
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Z))
         {
@@ -54,12 +54,12 @@ public class Movement : MonoBehaviour
         DrawRays();
         Inputs();
 
-        if (_isMoving && _isLadderMoving)
+        if (_isMoving)
             Move();
 
         if (_isLadderMoving && !_isMoving)
         {
-            LadderMovement(_ladderStartPos.position);
+            //LadderMovement(_ladderStartPos.position);
         }
     }
 
@@ -82,7 +82,7 @@ public class Movement : MonoBehaviour
         if (_isMoving) return;
 
         _moveHisTory.Push((_rb.position, transform.rotation));
-        //_moveDir = direction;
+        _moveDir = direction;
         _targetPos = _rb.position + direction;
 
         if (direction.normalized != Vector3.zero)
@@ -94,7 +94,7 @@ public class Movement : MonoBehaviour
 
     private void Move()
     {
-        Vector3 newPosition = Vector3.MoveTowards(_rb.position, _targetPos, _speed * Time.fixedDeltaTime);
+        Vector3 newPosition = Vector3.MoveTowards(_rb.position, _targetPos, _speed * Time.deltaTime);
         _rb.MovePosition(newPosition);
 
         if (Vector3.Distance(_rb.position, _targetPos) <= 0.01f)
@@ -115,7 +115,7 @@ public class Movement : MonoBehaviour
 
     private void DrawRays()
     {
-        bool ishit2 = Physics.Raycast(transform.position, transform.forward, out RaycastHit hit2, _range, _whatisLadder);
+        //bool ishit2 = Physics.Raycast(transform.position, transform.forward, out RaycastHit hit2, _range, _whatisLadder);
 
         //if (ishit2)
         //    _isLadderConnection = true;

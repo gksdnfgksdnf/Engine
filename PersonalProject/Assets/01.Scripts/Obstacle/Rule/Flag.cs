@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Flag : MonoBehaviour
 {
-    void Start()
+    void Awake()
     {
         gameObject.tag = "Flag";        
     }
