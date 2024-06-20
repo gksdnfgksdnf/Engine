@@ -28,7 +28,8 @@ public class IsWinManager : MonoBehaviour
 
     public void isWin()
     {
-
+        Color origin = _win.style.color.value;
+        _win.style.color = new StyleColor(new Color(origin.r, origin.g, origin.b, 255));
     }
 
 }

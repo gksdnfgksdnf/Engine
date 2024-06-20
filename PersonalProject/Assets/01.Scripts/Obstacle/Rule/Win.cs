@@ -15,7 +15,7 @@ public class Win : MonoBehaviour
     {
         if(other.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Win");
+            IsWinManager.instance.isWin();
         }
     }
 
