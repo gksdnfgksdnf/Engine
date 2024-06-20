@@ -1,17 +1,21 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class PlayerMovement : MonoBehaviour
+public class Movement : MonoBehaviour
 {
     private Rigidbody _rb;
 
     [SerializeField] private float _speed = 20f;
-    private Vector3 _moveDir = Vector3.zero;
+    //private Vector3 _moveDir = Vector3.zero;
     private Vector3 _targetPos;
+    [SerializeField] private Transform _ladderStartPos;
+    [SerializeField] private Transform _ladderEndPos;
 
     private bool _isMoving = false;
+    private bool _isLadderMoving = false;
+    //private bool _isLadderConnection = false;
+    //private bool _reverseLadderPos = false;
 
     private Stack<(Vector3, Quaternion)> _moveHisTory = new Stack<(Vector3, Quaternion)>();
 
@@ -28,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
 
 
     private bool _isObstacleMove = false;
+    private LayerMask _whatisLadder;
 
     private void Awake()
     {
@@ -35,24 +40,30 @@ public class PlayerMovement : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         _rb.useGravity = false;
         _whatisObstacle = 1 << LayerMask.NameToLayer("Obstacle");
+        _whatisLadder = 1 << LayerMask.NameToLayer("Ladder");
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (Input.GetKeyDown(KeyCode.Z))
         {
             UndoObstacle();
-            UndoLastMove();
+            UndoMove();
         }
 
-        Movement();
         DrawRays();
+        Inputs();
 
-        if (_isMoving)
+        if (_isMoving && _isLadderMoving)
             Move();
+
+        if (_isLadderMoving && !_isMoving)
+        {
+            LadderMovement(_ladderStartPos.position);
+        }
     }
 
-    private void Movement()
+    private void Inputs()
     {
         if (Input.GetKeyDown(KeyCode.W))
             StartMovement(Vector3.forward);
@@ -71,11 +82,11 @@ public class PlayerMovement : MonoBehaviour
         if (_isMoving) return;
 
         _moveHisTory.Push((_rb.position, transform.rotation));
-        _moveDir = direction;
-        _targetPos = _rb.position + _moveDir;
+        //_moveDir = direction;
+        _targetPos = _rb.position + direction;
 
-        if (_moveDir.normalized != Vector3.zero)
-            transform.rotation = Quaternion.LookRotation(_moveDir.normalized);
+        if (direction.normalized != Vector3.zero)
+            transform.rotation = Quaternion.LookRotation(direction.normalized);
 
         _isMoving = true;
 
@@ -93,7 +104,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void UndoLastMove()
+    private void UndoMove()
     {
         if (_moveHisTory.Count > 0)
         {
@@ -104,12 +115,20 @@ public class PlayerMovement : MonoBehaviour
 
     private void DrawRays()
     {
+        bool ishit2 = Physics.Raycast(transform.position, transform.forward, out RaycastHit hit2, _range, _whatisLadder);
+
+        //if (ishit2)
+        //    _isLadderConnection = true;
+        //else
+        //    _isLadderConnection = false;
+
+
         for (int i = 0; i < _directions.Length; i++)
         {
             Vector3 direction = _directions[i];
             bool isHit = Physics.Raycast(transform.position, direction, out RaycastHit hit, _range, _whatisObstacle);
 
-            if (isHit && hit.collider.TryGetComponent<Obstacle>(out Obstacle obstacle))
+            if (isHit && hit.collider.TryGetComponent(out Obstacle obstacle))
                 _contactObjs[i] = obstacle; // 각 방향의 장애물을 저장
             else
                 _contactObjs[i] = null; // 장애물이 없으면 null로 설정
@@ -136,12 +155,26 @@ public class PlayerMovement : MonoBehaviour
     }
     private void UndoObstacle()
     {
-        if (_obstacleMove.Count > 0 && _obstacleMove.Pop())
+        if (_obstacleMove.Count > 0)
         {
             bool isHit = Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, _range, _whatisObstacle);
 
-            if (isHit && hit.collider.TryGetComponent<Obstacle>(out Obstacle obstacle))
+            if (isHit && hit.collider.TryGetComponent(out Obstacle obstacle))
                 obstacle.UndoMove(transform.forward);
+
+            _obstacleMove.Pop();
+        }
+    }
+
+    private void LadderMovement(Vector3 targetPos)
+    {
+        Vector3 newPosition = Vector3.MoveTowards(_rb.position, targetPos, _speed * Time.fixedDeltaTime);
+        _rb.MovePosition(newPosition);
+
+        if (Vector3.Distance(_rb.position, _targetPos) <= 0.01f)
+        {
+            _rb.position = _targetPos;
+            _isLadderMoving = false;
         }
     }
 }

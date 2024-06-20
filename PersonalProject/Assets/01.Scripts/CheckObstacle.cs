@@ -4,6 +4,7 @@ using UnityEngine;
 public class CheckObstacle : MonoBehaviour
 {
     private PlayerInput _playerInput;
+
     [SerializeField] private float _range = 1f;
     [SerializeField] private LayerMask _whatisObstacle;
 
@@ -14,25 +15,32 @@ public class CheckObstacle : MonoBehaviour
 
     private Stack<bool> _obstacleMove = new Stack<bool>();
 
-
     private bool _isObstacleMove = false;
 
     private void Awake()
     {
-        _playerInput = GetComponentInParent<PlayerInput>();
-        _playerInput.OnMove += OnMove;
+        _playerInput = GetComponent<PlayerInput>();
+        if (_playerInput != null)
+        {
+            Debug.Log("PlayerInput component found.");
+            _playerInput.OnMove += OnMove;
+        }
+        else
+        {
+            Debug.LogError("PlayerInput component is missing.");
+        }
+
+        _whatisObstacle = LayerMask.GetMask("Obstacle");
     }
 
     private void Update()
     {
         DrawRays();
-
-        if (Input.GetKeyDown(KeyCode.Z))
-            UndoMove();
     }
 
     private void OnMove(Vector3 input)
     {
+        Debug.Log("ming");
         currentInput = input;
         AttemptMove();
     }
@@ -63,22 +71,11 @@ public class CheckObstacle : MonoBehaviour
             }
         }
 
-        if (_isObstacleMove == false)
+        if (!_isObstacleMove)
             _obstacleMove.Push(false);
 
         _isObstacleMove = false;
 
-    }
-
-    private void UndoMove()
-    {
-        if (_obstacleMove.Count > 0 && _obstacleMove.Pop())
-        {
-            bool isHit = Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, _range, _whatisObstacle);
-
-            if (isHit && hit.collider.TryGetComponent(out Obstacle obstacle))
-                obstacle.UndoMove(transform.forward);
-        }
     }
 
     private void OnDrawGizmos()

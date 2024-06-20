@@ -54,7 +54,7 @@ public class Obstacle : MonoBehaviour
     private void CheckForObstaclesInDirection(Vector3 direction)
     {
         if (Physics.Raycast(transform.position, direction, out RaycastHit hit, _range, _whatisObstacle))
-            if (hit.collider.TryGetComponent<Obstacle>(out Obstacle obstacle))
+            if (hit.collider.TryGetComponent(out Obstacle obstacle))
                 HandleObstacleHit(obstacle, direction);
     }
 

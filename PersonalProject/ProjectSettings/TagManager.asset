@@ -11,6 +11,8 @@ TagManager:
   - Is
   - Push
   - Win
+  - Lock
+  - Open
   layers:
   - Default
   - TransparentFX
@@ -25,10 +27,10 @@ TagManager:
   - Is
   - Win
   - You
-  - 
-  - 
-  - 
-  - 
+  - Lock
+  - Open
+  - Ladder
+  - Climb
   - 
   - 
   - 

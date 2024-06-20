@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
@@ -13,15 +12,27 @@ public class PlayerInput : MonoBehaviour
 
     private void Movement()
     {
-        //if (!RuleManager.instance.BaboIsYou()) return;
-
         if (Input.GetKeyDown(KeyCode.W))
+        {
+            Debug.Log("W key pressed");
             OnMove?.Invoke(Vector3.forward);
+        }
         else if (Input.GetKeyDown(KeyCode.S))
+        {
+            Debug.Log("S key pressed");
             OnMove?.Invoke(Vector3.back);
+        }
         else if (Input.GetKeyDown(KeyCode.A))
+        {
+            Debug.Log("A key pressed");
             OnMove?.Invoke(Vector3.left);
+        }
         else if (Input.GetKeyDown(KeyCode.D))
+        {
+            Debug.Log("D key pressed");
             OnMove?.Invoke(Vector3.right);
+        }
     }
 }
+
+

@@ -4,13 +4,13 @@ public class Particle : MonoBehaviour
 {
     private ParticleSystem _particle;
     private PlayerInput _input;
-    private PlayerMovement _movement;
+    private Movement _movement;
 
     private void Awake()
     {
         _particle = GetComponentInChildren<ParticleSystem>();
         _input = GetComponentInParent<PlayerInput>();
-        _movement = GetComponentInParent<PlayerMovement>();
+        _movement = GetComponentInParent<Movement>();
         _input.OnMove += StartParticle;
     }
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,7 +28,7 @@ public class Is : MonoBehaviour
                     DestroyAllComponents(gameObj);
 
                     gameObj.AddComponent<Player>();
-                    gameObj.AddComponent<PlayerMovement>();
+                    gameObj.AddComponent<Movement>();
                 }
             }
 
@@ -59,7 +60,30 @@ public class Is : MonoBehaviour
                     gameObj.AddComponent<Win>();
                 }
 
+                if(hit.collider.gameObject.CompareTag("Baba"))
+                {
+                    DestroyAllComponents(gameObj);
+                    gameObj.AddComponent<Player>();
+                    gameObj.AddComponent<Movement>();
+                }
 
+                if(hit.collider.gameObject.CompareTag("Rock"))
+                {
+                    DestroyAllComponents(gameObj);
+                    
+
+                    Component[] components = hit.collider.GetComponents<Component>();
+                    
+                    foreach(Component component in components)
+                    {
+                        if (component is MonoBehaviour)
+                        {
+                            Type componentType = component.GetType();
+                            gameObj.AddComponent(componentType);
+                        }
+
+                    }
+                }
             }
 
 

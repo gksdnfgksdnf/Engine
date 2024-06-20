@@ -113,7 +113,7 @@ GameObject:
   - component: {fileID: 933675611992134518}
   - component: {fileID: 4710314825607123068}
   m_Layer: 10
-  m_Name: Cube
+  m_Name: is_Obstacle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -171,7 +171,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 6656
   _range: 1
-  _isComponentAdded: 0
+  _isActioned: 0
 --- !u!1001 &5014091927868057550
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -186,6 +186,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1156833790, guid: 9b830982cae002546912d485de3011e8,
         type: 3}
+    - target: {fileID: 703248311782893107, guid: e32e94f854653984a923e85f598969ba,
+        type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 958417796692904740, guid: e32e94f854653984a923e85f598969ba,
         type: 3}
       propertyPath: m_Name
@@ -202,7 +207,43 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1156833790, guid: 9b830982cae002546912d485de3011e8,
         type: 3}
+    - target: {fileID: 1427483575735500697, guid: e32e94f854653984a923e85f598969ba,
+        type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1634632973277323001, guid: e32e94f854653984a923e85f598969ba,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.48
+      objectReference: {fileID: 0}
+    - target: {fileID: 2296803249652960525, guid: e32e94f854653984a923e85f598969ba,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.48
+      objectReference: {fileID: 0}
+    - target: {fileID: 2370889689894185549, guid: e32e94f854653984a923e85f598969ba,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.48
+      objectReference: {fileID: 0}
     - target: {fileID: 2425966244852376631, guid: e32e94f854653984a923e85f598969ba,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1156833790, guid: 9b830982cae002546912d485de3011e8,
+        type: 3}
+    - target: {fileID: 2425966244852376631, guid: e32e94f854653984a923e85f598969ba,
+        type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2701984965161582010, guid: e32e94f854653984a923e85f598969ba,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.48
+      objectReference: {fileID: 0}
+    - target: {fileID: 4226948663724676553, guid: e32e94f854653984a923e85f598969ba,
         type: 3}
       propertyPath: m_Sprite
       value: 
@@ -210,10 +251,9 @@ PrefabInstance:
         type: 3}
     - target: {fileID: 4226948663724676553, guid: e32e94f854653984a923e85f598969ba,
         type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 1156833790, guid: 9b830982cae002546912d485de3011e8,
-        type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5707768930536144616, guid: e32e94f854653984a923e85f598969ba,
         type: 3}
       propertyPath: m_StaticEditorFlags
@@ -235,6 +275,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1156833790, guid: 9b830982cae002546912d485de3011e8,
         type: 3}
+    - target: {fileID: 6773829547258910775, guid: e32e94f854653984a923e85f598969ba,
+        type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7285361771493244611, guid: e32e94f854653984a923e85f598969ba,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -294,6 +339,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 9050954633408294046, guid: e32e94f854653984a923e85f598969ba,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.48
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
