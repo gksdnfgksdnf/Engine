@@ -59,16 +59,19 @@ public class Is : MonoBehaviour
 
             if (hit.collider.TryGetComponent(out Subject s))
             {
+                Debug.Log("Subject끼리의 접촉 발생");
                 for (int i = 0; i < gameObj.Length; i++)
                 {
                     if (hit.collider.gameObject.CompareTag("Flag"))
                     {
+                        Debug.Log("Flag로 변환");
                         DestroyAllComponents(gameObj[i]);
                         gameObj[i].AddComponent<Win>();
                     }
 
                     if (hit.collider.gameObject.CompareTag("Baba"))
                     {
+                        Debug.Log("Baba로 변환");
                         DestroyAllComponents(gameObj[i]);
                         gameObj[i].AddComponent<Player>();
                         gameObj[i].AddComponent<Movement>();
@@ -76,6 +79,8 @@ public class Is : MonoBehaviour
 
                     if (hit.collider.gameObject.CompareTag("Rock"))
                     {
+                        Debug.Log("Rock로 변환");
+
                         DestroyAllComponents(gameObj[i]);
 
                         Component[] components = hit.collider.GetComponents<Component>();
