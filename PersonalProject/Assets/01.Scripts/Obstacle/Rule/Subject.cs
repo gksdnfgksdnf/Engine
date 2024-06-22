@@ -34,6 +34,8 @@ public class Subject : MonoBehaviour
 
                 if (hit.collider.TryGetComponent(out Is Is))
                     Is.DrawRay(direction, _subjectObj);
+
+
             }
         }
     }

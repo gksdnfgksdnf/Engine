@@ -65,6 +65,8 @@ public class Movement : MonoBehaviour
 
     private void Inputs()
     {
+        if (IsWinManager.instance.Wined()) return;
+
         if (Input.GetKeyDown(KeyCode.W))
             StartMovement(Vector3.forward);
         else if (Input.GetKeyDown(KeyCode.S))

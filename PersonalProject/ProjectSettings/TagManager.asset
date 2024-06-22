@@ -14,6 +14,7 @@ TagManager:
   - Lock
   - Open
   - Key
+  - Death
   layers:
   - Default
   - TransparentFX
@@ -32,7 +33,7 @@ TagManager:
   - Open
   - Ladder
   - Climb
-  - 
+  - Death
   - 
   - 
   - 

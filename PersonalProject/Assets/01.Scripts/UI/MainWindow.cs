@@ -14,7 +14,6 @@ public class MainWindow : MonoBehaviour
     private Label _settingLabel;
     private VisualElement _settings;
     private Label _exitGame;
-    private event Action<bool> onComplete;
     private Color startColor;
 
     private VisualElement _quit;
@@ -25,7 +24,7 @@ public class MainWindow : MonoBehaviour
     private void Awake()
     {
         _uiDocument = GetComponent<UIDocument>();
-        onComplete += HandleOnComplete;
+        UIManager.onComplete += HandleOnComplete;
     }
 
     private void OnEnable()
@@ -54,7 +53,7 @@ public class MainWindow : MonoBehaviour
 
         _startGame.RegisterCallback<ClickEvent>(evt =>
         {
-            StartCoroutine(FadeIn(_fade, 2f, true));
+            UIManager.Instance.FadeIn(_fade, 2f, true);
         });
 
         _settingLabel.RegisterCallback<ClickEvent>(evt =>
@@ -72,7 +71,7 @@ public class MainWindow : MonoBehaviour
 
         _leave.RegisterCallback<ClickEvent>(evt =>
         {
-            StartCoroutine(FadeIn(_fade, 2f, false));
+            UIManager.Instance.FadeIn(_fade, 2f, false);
         });
 
         _exit.RegisterCallback<ClickEvent>(evt =>
@@ -94,37 +93,11 @@ public class MainWindow : MonoBehaviour
         element.style.backgroundColor = color;
     }
 
-    private IEnumerator FadeIn(VisualElement element, float duration, bool isStart)
-    {
-        _fade.style.display = DisplayStyle.Flex;
-
-        startColor = element.resolvedStyle.backgroundColor;
-        float time = 0f;
-
-        while (time < duration)
-        {
-            time += Time.deltaTime;
-            float t = Mathf.Clamp01(time / duration);
-            // 배경색의 alpha 값을 변화시킵니다.
-            Color newColor = new(startColor.r, startColor.g, startColor.b, Mathf.Lerp(startColor.a, 1f, t));
-            SetBackgroundColor(element, newColor);
-            yield return null;
-        }
-
-        // 최종적으로 완전히 불투명한 배경 설정
-        SetBackgroundColor(element, new Color(startColor.r, startColor.g, startColor.b, 1f));
-
-        onComplete?.Invoke(isStart);
-    }
-
     private void HandleOnComplete(bool isStart)
     {
         if (isStart)
-            SceneManager.LoadScene(1); // 게임 시작
+            SceneManager.LoadScene(1);
         else
-        {
-            Debug.Log("Application.Quit");
-            Application.Quit(); // 게임 종료
-        }
+            Application.Quit();
     }
 }

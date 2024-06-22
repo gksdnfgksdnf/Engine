@@ -1,13 +1,13 @@
 using UnityEngine;
 using System;
+using System.Collections.Generic;
 
 public class Is : MonoBehaviour
 {
     [SerializeField] private LayerMask _whatisTarget;
     [SerializeField] private int _range;
 
-    [SerializeField] private bool _isActioned = false;
-    private bool _isDestroyComponent = false; // 초기에는 false로 설정
+    private List<Type> addedComponents = new List<Type>(); // 추가된 컴포넌트를 추적하기 위한 리스트
 
     public void DrawRay(Vector3 dir, GameObject[] gameObj)
     {
@@ -15,110 +15,65 @@ public class Is : MonoBehaviour
 
         if (isHit)
         {
-            if (_isActioned) return;
+            // 기존에 작업을 수행했으면 바로 리턴
+            if (addedComponents.Count > 0)
+                return;
 
-            _isDestroyComponent = false; // 초기화
-
+            //속성 추가
             if (hit.collider.TryGetComponent(out You you))
-            {
-                if (you.gameObject.CompareTag("You"))
-                {
-                    for (int i = 0; i < gameObj.Length; i++)
-                    {
-                        DestroyAllComponents(gameObj[i]);
-
-                        gameObj[i].AddComponent<Player>();
-                        gameObj[i].AddComponent<Movement>();
-                    }
-                }
-            }
+                addedComponents.Add(typeof(Movement));
 
             if (hit.collider.TryGetComponent(out Push push))
-            {
-                for (int i = 0; i < gameObj.Length; i++)
-                {
-                    if (push.gameObject.CompareTag("Push"))
-                    {
-                        DestroyAllComponents(gameObj[i]);
-                        gameObj[i].AddComponent<Obstacle>();
-                    }
-                }
-            }
+                addedComponents.Add(typeof(Obstacle));
 
             if (hit.collider.TryGetComponent(out Win win))
-            {
-                for (int i = 0; i < gameObj.Length; i++)
-                {
-                    if (win.gameObject.CompareTag("Win"))
-                    {
-                        DestroyAllComponents(gameObj[i]);
-                        gameObj[i].AddComponent<Win>();
-                    }
-                }
-            }
+                addedComponents.Add(typeof(Win));
+
+            if (hit.collider.TryGetComponent(out Death death))
+                addedComponents.Add(typeof(Skul));
+
+            if (hit.collider.TryGetComponent(out Open open))
+                addedComponents.Add(typeof(Key));
 
             if (hit.collider.TryGetComponent(out Subject s))
             {
-                Debug.Log("Subject끼리의 접촉 발생");
-                for (int i = 0; i < gameObj.Length; i++)
-                {
-                    if (hit.collider.gameObject.CompareTag("Flag"))
-                    {
-                        Debug.Log("Flag로 변환");
-                        DestroyAllComponents(gameObj[i]);
-                        gameObj[i].AddComponent<Win>();
-                    }
-
-                    if (hit.collider.gameObject.CompareTag("Baba"))
-                    {
-                        Debug.Log("Baba로 변환");
-                        DestroyAllComponents(gameObj[i]);
-                        gameObj[i].AddComponent<Player>();
-                        gameObj[i].AddComponent<Movement>();
-                    }
-
-                    if (hit.collider.gameObject.CompareTag("Rock"))
-                    {
-                        Debug.Log("Rock로 변환");
-
-                        DestroyAllComponents(gameObj[i]);
-
-                        Component[] components = hit.collider.GetComponents<Component>();
-
-                        foreach (Component component in components)
-                        {
-                            if (component is MonoBehaviour)
-                            {
-                                Type componentType = component.GetType();
-                                gameObj[i].AddComponent(componentType);
-                            }
-                        }
-                    }
-                }
+                if (hit.collider.gameObject.CompareTag("Flag"))
+                    addedComponents.Add(typeof(Win));
+                else if (hit.collider.gameObject.CompareTag("Baba"))
+                    addedComponents.Add(typeof(Movement));
+                else if (hit.collider.gameObject.CompareTag("Rock"))
+                    addedComponents.Add(typeof(Obstacle));
             }
 
-            _isActioned = true;
+            // gameObj에 모든 추가된 컴포넌트를 추가
+            foreach (GameObject obj in gameObj)
+            {
+                DestroyComponent(obj); // 기존 컴포넌트 모두 삭제
+
+                foreach (Type componentType in addedComponents)
+                {
+                    obj.AddComponent(componentType);
+                }
+            }
         }
         else
         {
-            _isActioned = false;
-            if (!_isDestroyComponent) // 한 번만 실행되도록 제어
+            // 아무 것도 닿지 않았을 때 기존 컴포넌트 모두 삭제
+            foreach (GameObject obj in gameObj)
             {
-                for (int i = 0; i < gameObj.Length; i++)
-                    DestroyAllComponents(gameObj[i]);
-
-                _isDestroyComponent = true; // 파괴 작업이 한 번 완료되었음을 표시
+                DestroyComponent(obj);
             }
+
+            addedComponents.Clear(); // 추가된 컴포넌트 리스트 초기화
         }
     }
 
-    private void DestroyAllComponents(GameObject obj)
+    private void DestroyComponent(GameObject obj)
     {
-        Component[] components = obj.GetComponents<Component>();
-
-        foreach (Component component in components)
+        foreach (Type componentType in addedComponents)
         {
-            if (component is MonoBehaviour)
+            MonoBehaviour component = obj.GetComponent(componentType) as MonoBehaviour;
+            if (component != null)
             {
                 Destroy(component);
             }
