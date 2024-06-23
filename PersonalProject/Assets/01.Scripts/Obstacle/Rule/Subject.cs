@@ -5,6 +5,8 @@ public class Subject : MonoBehaviour
     [SerializeField] private LayerMask _whatisTarget;
     [SerializeField] private GameObject[] _subjectObj;
 
+    private Is _target;
+
     private Vector3[] _directions = { Vector3.back, Vector3.right };
     private int _range = 1;
 
@@ -33,9 +35,16 @@ public class Subject : MonoBehaviour
                 _actioned = false;
 
                 if (hit.collider.TryGetComponent(out Is Is))
-                    Is.DrawRay(direction, _subjectObj);
-
-
+                {
+                    _target = Is;
+                    _target.DrawRay(direction, _subjectObj);
+                }
+            }
+            else
+            {
+                if (_allRaysMissed)
+                    foreach (GameObject obj in _subjectObj)
+                        _target.DestroyComponent(obj);
             }
         }
     }
