@@ -4,7 +4,6 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Babo
   - Flag
   - Rock
   - You
@@ -15,11 +14,12 @@ TagManager:
   - Open
   - Key
   - Death
+  - Baba
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Wall
   - Water
   - UI
   - Obstacle
@@ -31,7 +31,7 @@ TagManager:
   - You
   - Lock
   - Open
-  - Ladder
+  - Stop
   - Climb
   - Death
   - 

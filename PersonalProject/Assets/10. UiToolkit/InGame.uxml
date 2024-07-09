@@ -1,6 +1,7 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/10.%20UiToolkit/InGame.uss?fileID=7433441132597879392&amp;guid=010ea6b6882a82242893a9a3813b04ab&amp;type=3#InGame" />
     <ui:VisualElement name="container" style="flex-grow: 1;">
+        <ui:VisualElement name="fade" style="flex-grow: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0); position: absolute; visibility: visible; display: none;" />
         <ui:VisualElement name="congratuation" style="flex-grow: 1; align-items: center; justify-content: center;">
             <ui:Label tabindex="-1" text="Congratuation!" parse-escape-sequences="true" display-tooltip-when-elided="true" name="congratuation-lbl" style="padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; -unity-font-definition: initial; -unity-font: url(&apos;project://database/Assets/01.Scripts/UI/DNFBitBitv2_TTF/DNFBitBitv2.ttf?fileID=12800000&amp;guid=bd6ba64812e09c34d92f227a445e3e0d&amp;type=3#DNFBitBitv2&apos;); font-size: 100px; color: rgba(255, 255, 0, 0); -unity-text-align: upper-center; transition-duration: 2s; transition-property: color;" />
         </ui:VisualElement>

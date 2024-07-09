@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Subject : MonoBehaviour
@@ -10,19 +11,30 @@ public class Subject : MonoBehaviour
     private Vector3[] _directions = { Vector3.back, Vector3.right };
     private int _range = 1;
 
-    private bool _allRaysMissed = false;
-    private bool _actioned = false;
+    bool anyRayHit;
 
-    void FixedUpdate()
+    private void Start()
     {
         DrawRays();
-        if (_allRaysMissed && !_actioned)
-            _actioned = true;
+    }
+    void FixedUpdate()
+    {
+        if (Input.GetKeyDown(KeyCode.W))
+            StartCoroutine(DrawRays());
+        else if (Input.GetKeyDown(KeyCode.S))
+            StartCoroutine(DrawRays());
+        else if (Input.GetKeyDown(KeyCode.A))
+            StartCoroutine(DrawRays());
+        else if (Input.GetKeyDown(KeyCode.D))
+            StartCoroutine(DrawRays());
+
+
     }
 
-    private void DrawRays()
+    private IEnumerator DrawRays()
     {
-        _allRaysMissed = true;
+        yield return new WaitForSeconds(.5f);
+        anyRayHit = false;
 
         for (int i = 0; i < _directions.Length; i++)
         {
@@ -31,20 +43,28 @@ public class Subject : MonoBehaviour
 
             if (isHit)
             {
-                _allRaysMissed = false; // 하나라도 감지되면 false로 설정
-                _actioned = false;
-
+                anyRayHit = true;
                 if (hit.collider.TryGetComponent(out Is Is))
                 {
                     _target = Is;
                     _target.DrawRay(direction, _subjectObj);
                 }
             }
-            else
+        }
+
+        if (!anyRayHit)
+        {
+            HandleAllRaysMissed();
+        }
+    }
+
+    private void HandleAllRaysMissed()
+    {
+        foreach (GameObject obj in _subjectObj)
+        {
+            if (_target != null)
             {
-                if (_allRaysMissed)
-                    foreach (GameObject obj in _subjectObj)
-                        _target.DestroyComponent(obj);
+                _target.DestroyComponent(obj);
             }
         }
     }

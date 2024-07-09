@@ -6,6 +6,10 @@ public class Chest : MonoBehaviour
     private Animator _open;
     [SerializeField] private GameObject _target;
 
+    private void Awake()
+    {
+        _target = Resources.Load<GameObject>("04.Prefab/Flag");
+    }
     private void Start()
     {
         _open = GetComponentInChildren<Animator>();

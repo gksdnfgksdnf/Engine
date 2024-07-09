@@ -20,6 +20,7 @@ public class MainWindow : MonoBehaviour
     private VisualElement _quitContent;
     private Label _leave;
     private Label _exit;
+    internal static object instance;
 
     private void Awake()
     {
@@ -53,7 +54,8 @@ public class MainWindow : MonoBehaviour
 
         _startGame.RegisterCallback<ClickEvent>(evt =>
         {
-            UIManager.Instance.FadeIn(_fade, 2f, true);
+            Debug.Log("시작");
+            StartCoroutine(FadeIn(_fade, 2, true));
         });
 
         _settingLabel.RegisterCallback<ClickEvent>(evt =>
@@ -71,7 +73,7 @@ public class MainWindow : MonoBehaviour
 
         _leave.RegisterCallback<ClickEvent>(evt =>
         {
-            UIManager.Instance.FadeIn(_fade, 2f, false);
+            StartCoroutine(FadeIn(_fade, 2, false));
         });
 
         _exit.RegisterCallback<ClickEvent>(evt =>
@@ -95,9 +97,35 @@ public class MainWindow : MonoBehaviour
 
     private void HandleOnComplete(bool isStart)
     {
+        Debug.Log("시작해라");
         if (isStart)
             SceneManager.LoadScene(1);
         else
             Application.Quit();
+    }
+
+
+    public IEnumerator FadeIn(VisualElement element, float duration, bool isStart)
+    {
+        element.style.display = DisplayStyle.Flex;
+
+        startColor = element.resolvedStyle.backgroundColor;
+        float time = 0f;
+
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            float t = Mathf.Clamp01(time / duration);
+
+            Color newColor = new(startColor.r, startColor.g, startColor.b, Mathf.Lerp(startColor.a, 1f, t));
+            SetBackgroundColor(element, newColor);
+            yield return null;
+        }
+
+        // 최종적으로 완전히 불투명한 배경 설정
+        SetBackgroundColor(element, new Color(startColor.r, startColor.g, startColor.b, 1f));
+
+        HandleOnComplete(isStart);
+
     }
 }

@@ -38,6 +38,8 @@ public class IsWinManager : MonoBehaviour
     {
         _win.style.color = new StyleColor(new Color(_winColor.r, _winColor.g, _winColor.b, 1)); // 나타내기
         _isWin = true;
+
+        MainWindow1.instance.StartFade();
     }
 
     public bool Wined()

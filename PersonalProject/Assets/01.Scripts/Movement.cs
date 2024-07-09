@@ -17,11 +17,11 @@ public class Movement : MonoBehaviour
     //private bool _isLadderConnection = false;
     //private bool _reverseLadderPos = false;
 
-    private Stack<(Vector3, Quaternion)> _moveHisTory = new Stack<(Vector3, Quaternion)>();
-
+    private Stack<(Vector3, Quaternion)> _moveHistory = new Stack<(Vector3, Quaternion)>();
 
     [SerializeField] private float _range = 1f;
     [SerializeField] public LayerMask _whatisObstacle;
+    [SerializeField] public LayerMask _whatisWall;
 
     private Vector3 currentInput;
     [SerializeField] private Obstacle[] _contactObjs = new Obstacle[4]; // 4방향의 장애물을 저장하기 위한 배열
@@ -29,7 +29,6 @@ public class Movement : MonoBehaviour
     private Vector3[] _directions = { Vector3.forward, Vector3.back, Vector3.right, Vector3.left };
 
     private Stack<bool> _obstacleMove = new Stack<bool>();
-
 
     private bool _isObstacleMove = false;
     private LayerMask _whatisLadder;
@@ -40,6 +39,7 @@ public class Movement : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         _rb.useGravity = false;
         _whatisObstacle = 1 << LayerMask.NameToLayer("Obstacle");
+        _whatisWall = 1 << LayerMask.NameToLayer("Wall");
         _whatisLadder = 1 << LayerMask.NameToLayer("Ladder");
     }
 
@@ -52,6 +52,7 @@ public class Movement : MonoBehaviour
         }
 
         DrawRays();
+
         Inputs();
 
         if (_isMoving)
@@ -67,6 +68,7 @@ public class Movement : MonoBehaviour
     {
         if (IsWinManager.instance.Wined()) return;
 
+        //Invoke 왜 안되냐...
         if (Input.GetKeyDown(KeyCode.W))
             StartMovement(Vector3.forward);
         else if (Input.GetKeyDown(KeyCode.S))
@@ -76,22 +78,28 @@ public class Movement : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.D))
             StartMovement(Vector3.right);
     }
+
     public void StartMovement(Vector3 direction)
     {
+        // 벽 체크
+        if (CheckWall(direction))
+        {
+            //RotateTowards(direction);
+            return;
+        }
+
         currentInput = direction;
         AttemptMove();
 
         if (_isMoving) return;
 
-        _moveHisTory.Push((_rb.position, transform.rotation));
         _moveDir = direction;
         _targetPos = _rb.position + direction;
+        _moveHistory.Push((_rb.position, transform.rotation));
 
-        if (direction.normalized != Vector3.zero)
-            transform.rotation = Quaternion.LookRotation(direction.normalized);
+        RotateTowards(direction);
 
         _isMoving = true;
-
     }
 
     private void Move()
@@ -108,23 +116,15 @@ public class Movement : MonoBehaviour
 
     private void UndoMove()
     {
-        if (_moveHisTory.Count > 0)
+        if (_moveHistory.Count > 0)
         {
-            (_targetPos, transform.rotation) = _moveHisTory.Pop();
+            (_targetPos, transform.rotation) = _moveHistory.Pop();
             _isMoving = true;
         }
     }
 
     private void DrawRays()
     {
-        //bool ishit2 = Physics.Raycast(transform.position, transform.forward, out RaycastHit hit2, _range, _whatisLadder);
-
-        //if (ishit2)
-        //    _isLadderConnection = true;
-        //else
-        //    _isLadderConnection = false;
-
-
         for (int i = 0; i < _directions.Length; i++)
         {
             Vector3 direction = _directions[i];
@@ -137,6 +137,11 @@ public class Movement : MonoBehaviour
         }
     }
 
+    private void RotateTowards(Vector3 direction)
+    {
+        if (direction.normalized != Vector3.zero)
+            transform.rotation = Quaternion.LookRotation(direction.normalized);
+    }
     private void AttemptMove()
     {
         for (int i = 0; i < _directions.Length; i++)
@@ -153,8 +158,8 @@ public class Movement : MonoBehaviour
             _obstacleMove.Push(false);
 
         _isObstacleMove = false;
-
     }
+
     private void UndoObstacle()
     {
         if (_obstacleMove.Count > 0)
@@ -179,4 +184,14 @@ public class Movement : MonoBehaviour
             _isLadderMoving = false;
         }
     }
+
+    private bool CheckWall(Vector3 direction)
+    {
+        bool isHit = Physics.Raycast(transform.position, direction, 1, _whatisWall);
+        if (isHit)
+            return true;
+        else
+            return false;
+    }
+
 }
